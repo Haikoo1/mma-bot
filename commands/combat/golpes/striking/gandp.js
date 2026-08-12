@@ -1,0 +1,87 @@
+const { validateUserRole, processRoll, buildAttackEmbed } = require('../../../../utils/combatEngine');
+const { FightManager } = require('../../../../utils/fightManager');
+
+module.exports = {
+    name: 'gandp',
+    attribute: 'striking',
+    outcomes: {
+        GEM: {
+            emoji: '💎',
+            title: 'GROUND AND POUND BRUTAL (TKO)',
+            color: 0x9b59b6,
+            texts: [
+                "{attacker} estabelece a postura por cima e solta uma marretada ininterrupta de socos e cotoveladas! O árbitro precisa intervir!",
+                "{attacker} massacra o oponente no chão com socos potentes na guarda aberta! Nocaute técnico devastador!"
+            ],
+            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
+        },
+        STAR2: {
+            emoji: '🌟',
+            title: 'GROUND AND POUND PESADO',
+            color: 0xf1c40f,
+            texts: [
+                "{attacker} fura a defesa por baixo e conecta socos pesados no rosto do oponente.",
+                "{attacker} usa os cotovelos de cima para baixo no chão, castigando o oponente."
+            ],
+            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
+        },
+        STAR: {
+            emoji: '⭐',
+            title: 'GROUND AND POUND TRAVADO',
+            color: 0x2ecc71,
+            texts: [
+                "{attacker} lança socos curtos por cima, mas o oponente grampeia seus braços na guarda.",
+                "{attacker} mantêm a pressão no solo pontuando com golpes curtos de quadril."
+            ],
+            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
+        },
+        MISS: {
+            emoji: '❌',
+            title: 'GROUND AND POUND DEFENDIDO',
+            color: 0xe74c3c,
+            texts: [
+                "{attacker} tenta golpear por cima, mas o oponente se defende bem e tenta a raspagem.",
+                "{attacker} fica sem ângulo no chão e ataca no vazio."
+            ],
+            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
+        }
+    },
+
+    async execute(message, level) {
+        const attacker = message.author;
+        if (!validateUserRole(message.member, this.attribute, level)) {
+            return message.reply(`❌ Você precisa do cargo de **${this.attribute.toUpperCase()} Nível ${level}**.`);
+        }
+
+        const fight = FightManager.getFight(message.channel.id);
+        let effectiveLevel = level;
+
+        if (fight) {
+            const attObj = fight.fighters.find(f => f.id === attacker.id);
+            if (attObj && (attObj.stamina < 35 || attObj.hasWeightPenalty)) {
+                effectiveLevel = Math.max(1, level - 1);
+            }
+        }
+
+        const tier = processRoll(effectiveLevel);
+        const outcomeData = this.outcomes[tier];
+
+        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        if (hitResult && hitResult.isFoul) return;
+
+        const embed = buildAttackEmbed({
+            attacker,
+            moveName: 'Ground and Pound (GnP)',
+            level,
+            effectiveLevel,
+            outcomeData,
+            alertMessage: hitResult ? hitResult.alertMessage : null
+        });
+
+        await message.reply({ embeds: [embed] });
+
+        if (hitResult && hitResult.pendingFinish) {
+            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        }
+    }
+};
