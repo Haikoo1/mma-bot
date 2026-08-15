@@ -4,6 +4,7 @@ const { FightManager } = require('../../../../utils/fightManager');
 module.exports = {
     name: 'bodylock',
     attribute: 'wrestling',
+    staminaCost: 4,
     outcomes: {
         GEM: {
             emoji: '💎',
@@ -72,7 +73,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, 'Bodylock', level, null, false, 'Wrestling');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Bodylock', level, null, false, 'Wrestling', this.staminaCost);
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({

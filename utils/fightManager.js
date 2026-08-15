@@ -117,7 +117,7 @@ class FightManager {
         return fight;
     }
 
-    static registerHit(channel, attackerUser, moveName, atkLevel, defLevel = null, isCutRisk = true, moveType = 'Striking') {
+    static registerHit(channel, attackerUser, moveName, atkLevel, defLevel = null, isCutRisk = true, moveType = 'Striking', staminaCost = 3) {
         const fight = activeFights.get(channel.id);
         if (!fight || fight.status !== 'IN_ROUND') return null;
 
@@ -145,8 +145,8 @@ class FightManager {
             defLevel = Math.min(5, Math.max(1, Math.floor(Math.random() * 3) + 1 + staminaFactor));
         }
 
-        // Gasto de Stamina proporcional
-        const baseStaminaCost = effectiveAtkLevel * 3;
+        // Gasto de Stamina proporcional (multiplicador específico de cada golpe)
+        const baseStaminaCost = staminaCost * effectiveAtkLevel;
         const extraWeightCost = attackerObj.hasWeightPenalty ? 5 : 0;
         attackerObj.stamina = Math.max(0, attackerObj.stamina - (baseStaminaCost + extraWeightCost));
 

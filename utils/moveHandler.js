@@ -12,7 +12,8 @@ async function executeMove(message, level, moveConfig) {
         level,
         null,
         moveConfig.isCutRisk ?? true,
-        moveConfig.attribute || 'Striking'
+        moveConfig.attribute || 'Striking',
+        moveConfig.staminaCost ?? 3
     );
 
     if (!result) {

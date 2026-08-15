@@ -4,6 +4,7 @@ const { FightManager } = require('../../../../utils/fightManager');
 module.exports = {
     name: 'gandp',
     attribute: 'striking',
+    staminaCost: 4,
     outcomes: {
         GEM: {
             emoji: '💎',
@@ -72,7 +73,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, 'Ground and Pound', level, null, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Ground and Pound', level, null, true, 'Striking', this.staminaCost);
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
