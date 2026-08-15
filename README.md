@@ -28,6 +28,19 @@ O prefixo padrão é `-`, mas todos os comandos também funcionam mencionando o 
 - O nível efetivo de um golpe cai **-1** se o lutador estiver com stamina abaixo de 35% ou com penalidade de peso.
 - Cada golpe resolve um roll com 4 faixas: **GEM** (perfeito, pode ativar contragolpe), **STAR2** (bom), **STAR** (parcial) e **MISS** (falhou).
 
+## Configuração de cargos
+
+Todos os golpes com nível (1 a 5) exigem o cargo da disciplina equivalente (ex.: `-jab1` exige **Striking 1**, `-kimura4` exige **Jiu-Jitsu 4**). Os IDs dos cargos ficam em `config/roles.js`:
+
+| Disciplina | Golpes | Config |
+|---|---|---|
+| 🥊 Trocação | `-jab`, `-direto`, `-uppercut`, chutes, `-gandp`... | `striking: { 1..5 }` ✅ configurado |
+| 🧤 Wrestling | `-single`, `-clinch`, `-controle`, `-scramble`, `-defqueda`... | `wrestling: { 1..5 }` ⚠️ preencher IDs |
+| 🥋 Jiu-Jitsu | `-armlock`, `-kimura`, `-triangulo`, `-montada`... | `jiujitsu: { 1..5 }` ⚠️ preencher IDs |
+| 🛡️ Defesa | `-def`, `-esquiva` | `defesa: { 1..5 }` ⚠️ preencher IDs |
+
+**Pendências de configuração:** o `adminRoleId` (Staff, usado em `-luta`, `-pesagem`, `-vitalidade` e no bypass de golpes) e os IDs de `wrestling`, `jiujitsu` e `defesa` ainda estão com placeholders (`ID_CARGO_...` / `ID_DO_CARGO_ADMIN_AQUI`) e precisam ser substituídos pelos IDs reais dos cargos do servidor. Enquanto não forem preenchidos, apenas Administradores conseguem usar esses golpes.
+
 ## Controle de luta
 
 | Comando | Função |
