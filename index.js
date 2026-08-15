@@ -95,10 +95,24 @@ client.on('messageCreate', async message => {
     }
 });
 
-// Manipulador de interações para botões nos intervalos
+// Manipulador de interações para botões
 client.on('interactionCreate', async interaction => {
     if (!interaction.isButton()) return;
 
+    // 📱 1. Interações da Rede Social (MMA-X)
+    if (['like', 'repost', 'reply'].includes(interaction.customId)) {
+        if (interaction.customId === 'like') {
+            return interaction.reply({ content: '❤️ Você curtiu esta publicação!', ephemeral: true });
+        }
+        if (interaction.customId === 'repost') {
+            return interaction.reply({ content: '🔁 Você repostou esta publicação no seu perfil do MMA-X!', ephemeral: true });
+        }
+        if (interaction.customId === 'reply') {
+            return interaction.reply({ content: '💬 Para responder, publique usando `-post` e mencione o usuário!', ephemeral: true });
+        }
+    }
+
+    // 🥊 2. Interações do Sistema de Luta
     const { FightManager } = require('./utils/fightManager');
     const fight = FightManager.getFight(interaction.channelId);
 

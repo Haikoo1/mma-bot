@@ -1,6 +1,6 @@
 # Bot MMA RP
 
-Bot de Discord de MMA Roleplay. Ele gerencia lutas completas dentro do chat: proposta e confirmação de confrontos, rounds cronometrados, golpes de trocação, wrestling e jiu-jitsu, sistema de peso, vitalidade de carreira e arbitragem do resultado.
+Bot de Discord de MMA Roleplay. Ele gerencia lutas completas dentro do chat: proposta e confirmação de confrontos, rounds cronometrados, golpes de trocação, wrestling e jiu-jitsu, sistema de peso, vitalidade de carreira e arbitragem do resultado. Além disso, conta com uma **rede social fictícia (MMA-X)** para dar mais imersão ao RP — totalmente opcional.
 
 ## Instalação
 
@@ -14,9 +14,10 @@ Crie um arquivo `.env` na raiz do projeto com o token do bot:
 
 ```
 DISCORD_TOKEN=seu_token_aqui
+GEMINI_API_KEY=sua_chave_opcional_aqui
 ```
 
-Rode com `npm start`.
+`GEMINI_API_KEY` é **opcional**: sem ela, os comentários da rede social (MMA-X) são gerados pelo fallback offline do bot. Rode com `npm start`.
 
 ## Como usar
 
@@ -58,6 +59,7 @@ O prefixo padrão é `-`, mas todos os comandos também funcionam mencionando o 
 | `-help` | Guia completo de comandos e golpes em um embed. |
 | `-status` | Painel tático da luta ativa: stamina, dano, contragolpe e pontuação. |
 | `-testluta` | Admin: ferramentas de teste (fim de round, dano direto, contragolpe, decisão simulada, tela de finalização). |
+| `-post` | Publica uma atualização na rede social do RP (MMA-X) — opcional, ver seção abaixo. |
 
 ## Golpes (níveis 1 a 5)
 
@@ -122,6 +124,15 @@ O prefixo padrão é `-`, mas todos os comandos também funcionam mencionando o 
 | `-finta` | RP: finta narrativa aleatória (sem roll). |
 | `-recuperar` | 1x por round: -2 de dano, cura 1 corte e +20% de stamina. |
 
+## Rede social do RP (MMA-X)
+
+A rede social **MMA-X** é uma feature criada pensando no **roleplay do Discord**: lutadores podem simular perfis, postar treinos, provocações e bastidores da carreira como se fossem atletas de verdade postando em uma rede social. O uso é **totalmente opcional** — ela não interfere nas lutas, no sistema de peso, na vitalidade nem em nenhuma outra mecânica do bot. Servidores podem usá-la para enriquecer o RP ou simplesmente ignorá-la.
+
+- **`-post <texto ou @handle>`** — publica na MMA-X com perfil `@seunome` (ou o arroba que você escolher com `-post @seu_handle texto`). Fotos/vídeos anexados também são suportados.
+- **Métricas por popularidade** — o engajamento (curtidas, reposts e comentários) é gerado conforme o cargo do lutador: 🐐 G.O.A.T, 🌟 Superstar, ⭐ Prospecto ou sem cargo.
+- **Comentários com IA** — as reações são geradas contextualmente pela IA do Gemini (gírias de internet BR, haters, torcedores e perfis de mídia). Sem `GEMINI_API_KEY`, o bot usa um fallback offline com arrobas aleatórias.
+- **Botões de interação** — cada publicação traz ❤️ Curtir, 🔁 Repostar e 💬 Comentar (a resposta ao comentário é feita pelo próprio `-post`).
+
 ## Botões de interação
 
 Durante os intervalos da luta, dois botões aparecem nos embeds:
@@ -140,7 +151,7 @@ Durante os intervalos da luta, dois botões aparecem nos embeds:
 
 ```
 commands/          Comandos do bot (admin, combat, utility)
-utils/             Mecânicas: fightManager, combatEngine, moveHandler, etc.
+utils/             Mecânicas: fightManager, combatEngine, moveHandler, socialEngine (IA da MMA-X), etc.
 config/            IDs de cargos e configurações
 data/              Persistência em JSON
 index.js           Entry point e carregamento de comandos
