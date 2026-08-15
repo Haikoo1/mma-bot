@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} coloca uma pressão sufocante de quadril por cima, imobiliza o oponente e castiga sem dar espaço de fuga!",
-                "{attacker} gasta o tempo com um domínio absoluto no chão, deixando o adversário totalmente preso e sem ação!"
+                "{attacker} gasta o tempo com um domínio absoluto no chão, deixando o adversário totalmente preso e sem ação!",
+                "{attacker} amassa o oponente por cima com o peso do corpo, anulando qualquer tentativa de levantada!",
+                "{attacker} estabiliza a posição de forma perfeita, mantendo o oponente pregado no tatame sob pressão implacável!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -20,8 +22,10 @@ module.exports = {
             title: 'DOMÍNIO FIRME POR CIMA',
             color: 0xf1c40f,
             texts: [
-                "{attacker} estabelece a meia-guarda/montada por cima e mantém a cabeça do oponente colarada no solo.",
-                "{attacker} usa o peso do corpo para travar as quadrís do adversário e dominar a posição."
+                "{attacker} estabelece a meia-guarda/montada por cima e mantém a cabeça do oponente colada no solo.",
+                "{attacker} usa o peso do corpo para travar os quadris do adversário e dominar a posição.",
+                "{attacker} pesa por cima, controla a cabeça e os braços do oponente, mantendo a liderança do chão.",
+                "{attacker} assegura a posição dominante no solo com boa distribuição de peso."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} segura a postura por cima na guarda, garantindo o tempo de domínio.",
-                "{attacker} consegue reter o oponente no chão após ele tentar se levantar."
+                "{attacker} consegue reter o oponente no chão após ele tentar se levantar.",
+                "{attacker} mantém o controle básico por cima, amassando a guarda sem arriscar muito."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} perde a postura por cima e o oponente consegue se levantar rápido!",
-                "{attacker} vacila no peso do quadril e permite ao adversário fazer a ponte e escapar da posição."
+                "{attacker} vacila no peso do quadril e permite ao adversário fazer a ponte e escapar da posição.",
+                "{attacker} tenta segurar no chão, mas o oponente esgrima o braço e reverte o controle."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'Wrestling');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Controle de Solo', level, null, false, 'Wrestling');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

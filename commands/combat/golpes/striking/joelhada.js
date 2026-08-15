@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} salta no ar e explode uma Joelhada Voadora brutal na cabeça do oponente! Apagão imediato!",
-                "{attacker} grampeia a nuca no clinch de Muay Thai e crava a joelhada no queixo do adversário!"
+                "{attacker} grampeia a nuca no clinch de Muay Thai e crava a joelhada no queixo do adversário!",
+                "{attacker} se lança para a frente e acerta um joelho voador devastador no nariz do oponente!",
+                "{attacker} projeta o joelho no plexo do adversário enquanto ele entrava no double leg! Queda instantânea!"
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} acerta uma joelhada seca nas costelas do oponente durante a aproximação.",
-                "{attacker} sobe o joelho em cheio na boca do estômago do adversário."
+                "{attacker} sobe o joelho em cheio na boca do estômago do adversário.",
+                "{attacker} domina a nuca do oponente e aplica joelhadas fortes na linha de cintura!",
+                "{attacker} lança a joelhada no queixo do rival, fazendo a cabeça dele chicotear para trás!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,17 +35,19 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} lança a joelhada no clinch, mas acerta as coxas do oponente.",
-                "{attacker} acerta a joelhada de leve na guarda alta do adversário."
+                "{attacker} acerta a joelhada de leve na guarda alta do adversário.",
+                "{attacker} sobe o joelho, mas atinge apenas o braço de proteção do oponente."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
-            title: 'JOELHADA BLOQUEADA OU DEFENDIDA',
+            title: 'JOELHADA BLOQUEADO OU DEFENDIDA',
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta a joelhada voadora, mas o oponente se esquiva e o faz cair no vácuo.",
-                "{attacker} sobe o joelho sem força e toma um contra-golpe em seguida."
+                "{attacker} sobe o joelho sem força e toma um contra-golpe em seguida.",
+                "{attacker} erra a joelhada e o oponente aproveita para cinturar pelas costas."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Joelhada', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

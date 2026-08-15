@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} encurta o raio de ação, esgrima os dois braços e prensa o oponente contra a grade sem dar espaço de respiração!",
-                "{attacker} trava o adversário no clinch com domínio total de pegadas, anulando qualquer reação do rival!"
+                "{attacker} trava o adversário no clinch com domínio total de pegadas, anulando qualquer reação do rival!",
+                "{attacker} cola o peito no oponente, ganha a esgrima dupla e o esmaga contra a grade com controle absoluto!",
+                "{attacker} anula o espaço do adversário, grampeando o tronco com pegadas firmes e pressão sufocante!"
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} cola o peito no oponente e consegue prensá-lo na grade do octógono.",
-                "{attacker} ganha a esgrima e prende o adversário na luta colada!"
+                "{attacker} ganha a esgrima e prende o adversário na luta colada!",
+                "{attacker} encurta a distância e estabelece um clinch firme contra a grade.",
+                "{attacker} domina um dos braços e prensa o oponente, impondo o jogo de grade!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} encurta a distância e trava os braços, mas o oponente consegue esgrimar de volta.",
-                "{attacker} segura o oponente na grade por alguns segundos antes da disputa de pegadas equilibrar."
+                "{attacker} segura o oponente na grade por alguns segundos antes da disputa de pegadas equilibrar.",
+                "{attacker} tenta travar a luta colada, mas o adversário responde com boa esgrima."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta grampear, mas é empurrado de volta pelo adversário antes de alinhar a base.",
-                "{attacker} avança desajeitado para o clinch e toma um contra-golpe que quebra a aproximação."
+                "{attacker} avança desajeitado para o clinch e toma um contra-golpe que quebra a aproximação.",
+                "{attacker} tenta a aproximação para a luta colada, mas o oponente esquiva e sai da linha de ataque."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'Wrestling');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Clinch', level, null, false, 'Wrestling');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

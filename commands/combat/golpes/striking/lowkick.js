@@ -7,11 +7,13 @@ module.exports = {
     outcomes: {
         GEM: {
             emoji: '💎',
-            title: 'LOWKICK DEVASTADOR NACOXA',
+            title: 'LOWKICK DEVASTADOR NA COXA',
             color: 0x9b59b6,
             texts: [
                 "{attacker} desfere um Lowkick estalando na coxa do adversário! O oponente quase cai e passa a mancar na hora!",
-                "{attacker} acerta a canela na panturrilha do oponente com tanta força que ele perde a base do pé!"
+                "{attacker} acerta a canela na panturrilha do oponente com tanta força que ele perde a base do pé!",
+                "{attacker} aplica um Lowkick brutal no nervo fibular! A perna do adversário adormece e dobra!",
+                "{attacker} vira o quadril com violência e estoura a coxa do oponente, que urra com a dor do impacto!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -20,8 +22,10 @@ module.exports = {
             title: 'LOWKICK FIRME',
             color: 0xf1c40f,
             texts: [
-                "{attacker} gira a perna e acerta um Lowkick seco na coxa do oponente.",
-                "{attacker} castiga a perna de apoio do adversário com um chute baixo de muita precisão!"
+                "{attacker} gira a perna e acerta um Lowkick seco na coxa do oponente!",
+                "{attacker} castiga a perna de apoio do adversário com um chute baixo de muita precisão!",
+                "{attacker} conecta um Lowkick firme na panturrilha, desequilibrando o rival momentaneamente.",
+                "{attacker} acerta a canela na parte interna da coxa do adversário com ótima velocidade!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} chuta baixo e raspa no joelho do oponente.",
-                "{attacker} toca a coxa do adversário sem pegar com o osso da canela cheio."
+                "{attacker} toca a coxa do adversário sem pegar com o osso da canela cheio.",
+                "{attacker} acerta a ponta do pé na perna do adversário com baixo impacto."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} lança o Lowkick, mas o oponente ergue o joelho e faz o check (bloqueio de canela)!",
-                "{attacker} erra a distância do chute e o adversário recolhe a perna a tempo."
+                "{attacker} erra a distância do chute e o adversário recolhe a perna a tempo.",
+                "{attacker} tenta o Lowkick, mas o oponente esquiva o passo para trás e o chute corta apenas o ar."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Lowkick', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

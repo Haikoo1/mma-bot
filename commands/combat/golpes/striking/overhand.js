@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} lança um Overhand perfeito por cima da guarda! O impacto desconecta o adversário instantaneamente!",
-                "Com uma potência surreal, {attacker} acerta o Overhand na têmpora. O oponente apaga no ato!"
+                "Com uma potência surreal, {attacker} acerta o Overhand na têmpora. O oponente apaga no ato!",
+                "{attacker} dobra a base e acerta uma bomba em arco de direita! O adversário desaba desacordado!",
+                "{attacker} projeta todo o peso do corpo num Overhand letal que explode no queixo do rival!"
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} conecta um Overhand pesadíssimo na bochecha, fazendo o oponente cambalear atordoado até a grade!",
-                "{attacker} finca um cruzado caindo de Overhand. O adversário perde o equilíbrio e recua!"
+                "{attacker} finca um cruzado caindo de Overhand. O adversário perde o equilíbrio e recua!",
+                "{attacker} contorna a guarda com uma pedrada de mão direita, marcando forte o rosto do oponente!",
+                "{attacker} acerta o Overhand na orelha do adversário, fazendo-o perder momentaneamente o teto!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} avança e acerta a ponta do Overhand na guarda, fazendo o oponente absorver a pressão.",
-                "{attacker} acha o tempo correto e acerta o golpe no queixo, somando pontos limpos."
+                "{attacker} acha o tempo correto e acerta o golpe no queixo, somando pontos limpos.",
+                "{attacker} lança o Overhand caindo por cima do braço do oponente com impacto moderado."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} telegrafa o Overhand com muita força. O oponente percebe o movimento e esquiva por baixo.",
-                "{attacker} projeta o corpo para o golpe, mas o adversário bloqueia completamente a trajetória."
+                "{attacker} projeta o corpo para o golpe, mas o adversário bloqueia completamente a trajetória.",
+                "{attacker} soca no vazio com tanta carga que quase perde o equilíbrio no octógono."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Overhand', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

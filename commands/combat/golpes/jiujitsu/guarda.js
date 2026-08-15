@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} fecha a guarda com firmeza, quebra a postura do oponente colando seu peito ao chão e anula todos os seus ataques por cima!",
-                "{attacker} estabelece o controle total da guarda, abrindo o leque perfeito para raspagens e finalizações!"
+                "{attacker} estabelece o controle total da guarda, abrindo o leque perfeito para raspagens e finalizações!",
+                "{attacker} impõe uma guarda fechada asfixiante, dominando a gola e a manga sem dar chances de esgrima para o oponente!",
+                "{attacker} trava os quadris do adversário em uma guarda impenetrável, quebrando completamente seu centro de gravidade!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} repõe a guarda de pernas flexíveis e impede o avanço do adversário.",
-                "{attacker} domina as esgrimas por baixo e controla a distância do Ground and Pound."
+                "{attacker} domina as esgrimas por baixo e controla a distância do Ground and Pound.",
+                "{attacker} atrai o adversário para a guarda aberta e estabelece o controle seguro de pernas.",
+                "{attacker} reergue os escudos de joelho e reconstrói uma retenção de guarda sólida."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} coloca a meia-guarda e reduz o espaço do oponente.",
-                "{attacker} consegue travar o tronco do adversário na guarda aberta."
+                "{attacker} consegue travar o tronco do adversário na guarda aberta.",
+                "{attacker} ganha a meia-guarda profunda e amarra a progressão por cima."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta reter a guarda, mas o oponente esmaga o quadril e passa para o controle lateral!",
-                "{attacker} perde o controle de pernas e cede a posição por cima."
+                "{attacker} perde o controle de pernas e cede a posição por cima.",
+                "{attacker} fura a retenção de pernas e deixa o rival estourar a pegada, cedendo a passagem."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Retenção de Guarda', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

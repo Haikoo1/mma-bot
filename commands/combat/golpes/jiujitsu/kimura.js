@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} trava o pulso do oponente no quatro, roda a alavanca de ombro e hiperextende a articulação! Desistência imediata!",
-                "{attacker} puxa a Kimura da guarda com pressão avassaladora! O adversário bate três vezes para não quebrar o ombro!"
+                "{attacker} puxa a Kimura da guarda com pressão avassaladora! O adversário bate três vezes para não quebrar o ombro!",
+                "{attacker} torce a alavanca de ombro em um ângulo torcional perfeito, arrancando o tapout fulminante do rival!",
+                "{attacker} encaixa a trava de figura quatro firme e força a articulação do ombro até o limite do desistimento!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} isola o braço do oponente na Kimura e força o ombro para trás.",
-                "{attacker} ganha a pegada figura quatro e começa a torcer a articulação no solo."
+                "{attacker} ganha a pegada figura quatro e começa a torcer a articulação no solo.",
+                "{attacker} traz o braço preso nas costas do oponente, impondo perigo severo à articulação.",
+                "{attacker} eleva a pegada no pulso e força o ombro do adversário com firmeza."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} encaixa a pegada no braço, mas o oponente esconde a mão no calção para defender.",
-                "{attacker} usa a Kimura para controlar a postura do oponente no chão."
+                "{attacker} usa a Kimura para controlar a postura do oponente no chão.",
+                "{attacker} busca a rotação do pulso, porém o oponente trava o braço junto ao próprio corpo."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} ataca na Kimura, mas o oponente roda por cima e desfaz a alavanca!",
-                "{attacker} perde a pegada do pulso e fica em posição desfavorável."
+                "{attacker} perde a pegada do pulso e fica em posição desfavorável.",
+                "{attacker} força a torção do ombro sem apoio suficiente e acaba invertido no chão."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Kimura', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

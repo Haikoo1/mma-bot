@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} pega as costas, ajusta os ganchos e passa o braço por baixo do queixo! O oponente bate três vezes desesperadamente!",
-                "{attacker} encaixa o Mata-Leão com pressão total nas carótidas! Sem espaço para respirar, o adversário apaga no solo!"
+                "{attacker} encaixa o Mata-Leão com pressão total nas carótidas! Sem espaço para respirar, o adversário apaga no solo!",
+                "{attacker} esconde a mão atrás da nuca do rival e fecha o estrangulamento de costas definitivo!",
+                "{attacker} grampeia as costas com triângulo de corpo e arrocha o Mata-Leão até o desmaio do adversário!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} grampeia as costas do oponente e fecha o cinto de segurança, pressionando o pescoço!",
-                "{attacker} passa o braço em volta do pescoço e força o adversário a gastar energia na defesa de mão."
+                "{attacker} passa o braço em volta do pescoço e força o adversário a gastar energia na defesa de mão.",
+                "{attacker} estabiliza os dois ganchos por trás e busca o queixo do rival com perigo.",
+                "{attacker} arrocha a pressão no pescoço por trás, deixando o oponente em estado de alerta máximo!"
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} ganha as costas, mas o oponente segura o pulso para evitar o estrangulamento.",
-                "{attacker} coloca um dos ganchos e busca a brecha no pescoço do adversário."
+                "{attacker} coloca um dos ganchos e busca a brecha no pescoço do adversário.",
+                "{attacker} controla a posição de costas, mas o adversário bloqueia a entrada do braço no queixo."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta passar o braço no pescoço, mas o oponente escorrega o quadril e gira para dentro da guarda!",
-                "{attacker} perde os ganchos e o adversário consegue colocar as costas no chão para se safar."
+                "{attacker} perde os ganchos e o adversário consegue colocar as costas no chão para se safar.",
+                "{attacker} escorrega na tentativa de domínio de costas e cede a posição por cima ao adversário."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Mata-Leão', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} gira o corpo 360° e acerta um Spinning Back Kick/Fist devastador na cabeça do oponente! Nocaute de filme!",
-                "{attacker} surpreende com um salto e golpe rodado direto na têmpora do adversário!"
+                "{attacker} surpreende com um salto e golpe rodado direto na têmpora do adversário!",
+                "{attacker} encaixa um calcanhar rodado brutal na cabeça do rival, fazendo-o tombar desacordado!",
+                "{attacker} solta o cotovelo rodado de surpresa, atingindo o queixo do oponente com rotação total!"
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} roda o corpo rapidamente e acerta o calcanhar/punho no tronco do oponente.",
-                "{attacker} pega o oponente desprevenido com uma giratória pesada na linha de cintura."
+                "{attacker} pega o oponente desprevenido com uma giratória pesada na linha de cintura.",
+                "{attacker} conecta um soco rodado no osso da bochecha do rival, fazendo-o recuar assustado!",
+                "{attacker} acerta a sola do pé no abdômen com um Spinning Back Kick firme!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} completa o giro e acerta o golpe de leve na guarda do adversário.",
-                "{attacker} lança o golpe rodado, mas perde um pouco de força no momento do impacto."
+                "{attacker} lança o golpe rodado, mas perde um pouco de força no momento do impacto.",
+                "{attacker} toca o tronco do oponente com o golpe rodado sem pegar cheio."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta o golpe rodado, erra completamente o alvo e fica de costas para o oponente!",
-                "{attacker} gira em falso e perde o equilíbrio no solo."
+                "{attacker} gira em falso e perde o equilíbrio no solo.",
+                "{attacker} telegrafa a giratória e o adversário se esquiva dando um passo simples para trás."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Spinning Back', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

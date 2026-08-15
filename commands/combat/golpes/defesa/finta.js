@@ -12,7 +12,9 @@ module.exports = {
             `🎭 <@${message.author.id}> finta uma entrada de queda, fazendo o oponente abaixar a guarda em antecipação!`,
             `🎭 <@${message.author.id}> finta um Overhand pesado de direita, obrigando o adversário a encolher os ombros!`,
             `🎭 <@${message.author.id}> dá um passo em falso para a esquerda, confundindo a leitura de distância do oponente!`,
-            `🎭 <@${message.author.id}> troca de base rapidamente e finta um chute baixo, medindo a reação do adversário!`
+            `🎭 <@${message.author.id}> troca de base rapidamente e finta um chute baixo, medindo a reação do adversário!`,
+            `🎭 <@${message.author.id}> ameça um Jab longo com o tronco e induz o adversário a pendular precocemente!`,
+            `🎭 <@${message.author.id}> finge um avanço agressivo no centro do octógono, fazendo o oponente recuar defensivamente!`
         ];
 
         const randomFinta = fintasTexts[Math.floor(Math.random() * fintasTexts.length)];

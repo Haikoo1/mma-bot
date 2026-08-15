@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} acerta a canela cheia no fígado do oponente! O adversário dobra o corpo de dor na hora!",
-                "{attacker} desfere um Midkick nas costelas com som estalando! O oponente perde o ar instantaneamente!"
+                "{attacker} desfere um Midkick nas costelas com som estalando! O oponente perde o ar instantaneamente!",
+                "{attacker} explode a canela no flanco do rival, fazendo-o cair de joelhos segurando as costelas!",
+                "{attacker} encaixa um Midkick violento de encontro, parando o avanço do adversário no ato!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} acerta um chute médio limpo no flanco do adversário.",
-                "{attacker} gira o quadril e acerta a canela nas costelas flutuantes do oponente!"
+                "{attacker} gira o quadril e acerta a canela nas costelas flutuantes do oponente!",
+                "{attacker} conecta um Midkick forte no tronco do rival, marcando a pontuação com precisão.",
+                "{attacker} acerta a lateral do corpo do oponente, tirando o ar do adversário momentaneamente."
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} lança o Midkick, mas o oponente amortece o impacto com os cotovelos.",
-                "{attacker} acerta a lateral do corpo do adversário com menos pressão."
+                "{attacker} acerta a lateral do corpo do adversário com menos pressão.",
+                "{attacker} chuta na linha de cintura, mas esbarra no bloqueio duplo do rival."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} lança o chute médio, mas o oponente segura a perna e ameaça o desequilíbrio!",
-                "{attacker} erra a distância do Midkick e passa direto no vazio."
+                "{attacker} erra a distância do Midkick e passa direto no vazio.",
+                "{attacker} tenta o chute na linha de cintura, mas o adversário recua e o golpe não conecta."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Midkick', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

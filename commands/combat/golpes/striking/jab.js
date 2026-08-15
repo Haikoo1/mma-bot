@@ -10,8 +10,10 @@ module.exports = {
             title: 'JAB PERFEITO / COUNTER',
             color: 0x9b59b6,
             texts: [
-                "{attacker} entra com um Jab seco no meio da guarda! O oponente estanca imediatamente com o impacto!",
-                "{attacker} lança o Jab de encontro, pegando o adversário no contra-pé com extrema precisão!"
+                "{attacker} se antecipa ao movimento do oponente e lança um Jab devastador de encontro! O impacto estala forte no octógono!",
+                "{attacker} encontra uma brecha milimétrica na guarda e soca direto no queixo! O adversário sente o golpe e dobra os joelhos!",
+                "{attacker} solta um Jab duplo rápido como um raio! O primeiro abre a guarda e o segundo conecta em cheio no nariz!",
+                "{attacker} projeta todo o peso do corpo num Jab esticado de esquerda! A cabeça do oponente chicoteia para trás!"
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -20,8 +22,10 @@ module.exports = {
             title: 'JAB LIMPO',
             color: 0xf1c40f,
             texts: [
-                "{attacker} estica o braço e acerta um Jab firme no nariz do oponente, marcando a distância.",
-                "{attacker} conecta o Jab de esquerda abrindo espaço na defesa do adversário!"
+                "{attacker} estica o braço rapidamente e acerta um Jab seco no rosto do oponente, marcando a distância com perfeição.",
+                "{attacker} muda de nível e solta um Jab forte no plexo do adversário, fazendo-o soltar o ar!",
+                "{attacker} conecta um Jab limpo na boca do estômago antes de dar um passo para fora.",
+                "{attacker} lança a mão da frente estalando a luva bem na ponta do nariz do oponente!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -30,8 +34,9 @@ module.exports = {
             title: 'JAB PARCIAL',
             color: 0x2ecc71,
             texts: [
-                "{attacker} toca o rosto do adversário com um Jab leve para medir o raio de ação.",
-                "{attacker} lança o Jab raspando na testa do oponente."
+                "{attacker} lança o Jab, mas ele apenas roça a testa do oponente sem causar grande impacto.",
+                "{attacker} toca o rosto do adversário com um Jab leve apenas para medir o raio de ação.",
+                "{attacker} solta o golpe, mas o oponente consegue amortecer parcialmente colocando a luva na frente."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -40,8 +45,9 @@ module.exports = {
             title: 'JAB ESQUIVADO',
             color: 0xe74c3c,
             texts: [
-                "{attacker} lança o Jab, mas o oponente pendula por baixo sem sofrer impacto.",
-                "{attacker} erra o tempo do Jab e o adversário bloqueia com facilidade."
+                "{attacker} projeta o Jab, mas o oponente pendula com elegância por baixo sem sofrer nada!",
+                "{attacker} erra o tempo do golpe e soca o ar enquanto o adversário dá um passo atrás.",
+                "{attacker} solta a mão, mas o oponente fecha a guarda alta e bloqueia o golpe com facilidade."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Jab', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,13 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            // Envia o Embed separado de Status / Confronto Atk vs Def
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

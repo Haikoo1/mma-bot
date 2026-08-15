@@ -10,8 +10,10 @@ module.exports = {
             title: 'DOMÍNIO SUFOCANTE NA GRADE (CAGE CONTROL)',
             color: 0x9b59b6,
             texts: [
-                "{attacker} prensar o oponente com força esmagadora na grade, isola seus braços e desfere joelhadas dolorosas nas coxas!",
-                "{attacker} estabelece uma pressão perfeita de grade, minando o espaço e a movimentação do adversário!"
+                "{attacker} prensa o oponente com força esmagadora na grade, isola seus braços e desfere joelhadas dolorosas nas coxas!",
+                "{attacker} estabelece uma pressão perfeita de grade, minando o espaço e a movimentação do adversário!",
+                "{attacker} trava o rival de costas para o octógono, desferindo ombradas e joelhadas sem dar descanso!",
+                "{attacker} impõe um controle de grade devastador, esmagando o oponente contra a tela sem qualquer chance de saída!"
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} empurra o adversário contra a grade e mantém o controle com a cabeça no queixo.",
-                "{attacker} ganha a esgrima e deixa o oponente sem espaço de esquiva na grade."
+                "{attacker} ganha a esgrima e deixa o oponente sem espaço de esquiva na grade.",
+                "{attacker} cola o peito e grampeia o rival contra a tela, somando tempo precioso de domínio.",
+                "{attacker} fixa o adversário na grade e pontua com curtas joelhadas na coxa."
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} encosta o oponente na grade, mas ele responde esgrimando um dos braços.",
-                "{attacker} mantêm o contato de grade pontuando com ombradas curtas."
+                "{attacker} mantém o contato de grade pontuando com ombradas curtas.",
+                "{attacker} empurra o rival contra a cerca, mas a disputa de pegadas permanece equilibrada."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta prensar na grade, mas o oponente roda o quadril e inverte a posição!",
-                "{attacker} perde o apoio na grade e o adversário se esquiva para o centro do octógono."
+                "{attacker} perde o apoio na grade e o adversário se esquiva para o centro do octógono.",
+                "{attacker} força a aproximação na grade sem esgrima e acaba sendo colocado de costas para a cerca."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'Wrestling');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Pressionar na Grade', level, null, false, 'Wrestling');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

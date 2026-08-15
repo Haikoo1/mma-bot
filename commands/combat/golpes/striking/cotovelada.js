@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} entra com uma Cotovelada frontal rasgando o supercílio do oponente! O sangue jorra instantaneamente!",
-                "{attacker} acerta uma Cotovelada rodada na ponta do queixo! O adversário desmorona desacordado!"
+                "{attacker} acerta uma Cotovelada rodada na ponta do queixo! O adversário desmorona desacordado!",
+                "{attacker} rasga o rosto do oponente com uma cotovelada descendente brutal, criando um corte profundo!",
+                "{attacker} acerta um cotovelo seco no queixo do rival, provocando uma queda fulminante!"
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} acha o espaço no clinch e finca a cotovelada na têmpora do oponente.",
-                "{attacker} roda o cotovelo de cima para baixo abrindo um corte na face do adversário."
+                "{attacker} roda o cotovelo de cima para baixo abrindo um corte na face do adversário.",
+                "{attacker} conecta um cotovelo curto e afiado na bochecha do oponente, atordoando-o!",
+                "{attacker} entra na distância curta e golpeia com a ponta do cotovelo no rosto do rival!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} acerta a ponta do cotovelo na guarda do oponente.",
-                "{attacker} raspa o cotovelo no rosto do adversário sem pegar cheio."
+                "{attacker} raspa o cotovelo no rosto do adversário sem pegar cheio.",
+                "{attacker} lança a cotovelada na distância curta, tocando de leve a testa do rival."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta a cotovelada curta, mas o oponente recua a cabeça e evita a lesão.",
-                "{attacker} rasga o ar com o cotovelo e perde a postura temporariamente."
+                "{attacker} rasga o ar com o cotovelo e perde a postura temporariamente.",
+                "{attacker} tenta a cotovelada rodada, mas passa completamente no vazio e fica exposto."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,8 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        // Risco aumentado de corte (isCutRisk: true)
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Cotovelada', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -81,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

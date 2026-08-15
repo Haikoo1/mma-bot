@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} roda o quadril e solta um Direto potente no queixo do oponente! O impacto estremece o octógono!",
-                "{attacker} acerta um Direto em cheio na ponta do queixo, fazendo as pernas do adversário dobrarem!"
+                "{attacker} acerta um Direto em cheio na ponta do queixo, fazendo as pernas do adversário dobrarem!",
+                "{attacker} dispara uma bomba de direita de encontro, explodindo a guarda e fazendo o oponente balançar!",
+                "{attacker} encaixa um Direto cirúrgico bem no centro do rosto, jogando o adversário contra as grades!"
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} lança a mão traseira com muita força e acerta em cheio o rosto do oponente!",
-                "{attacker} fura a guarda frontal com um Direto rápido, fazendo o adversário recuar!"
+                "{attacker} fura a guarda frontal com um Direto rápido, fazendo o adversário recuar!",
+                "{attacker} conecta um Direto limpo no peito do oponente, tirando a base do rival!",
+                "{attacker} explode um Direto no osso da bochecha do oponente com excelente velocidade!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} acerta o Direto na guarda alta, empurrando o oponente para trás.",
-                "{attacker} toca o rosto do adversário com o Direto, somando pontos limpos."
+                "{attacker} toca o rosto do adversário com o Direto, somando pontos limpos.",
+                "{attacker} dispara o Direto raspando no queixo do oponente sem o peso total do corpo."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} telegrafa o Direto e o oponente se esquiva com facilidade.",
-                "{attacker} solta a mão direita, mas esbarra no bloqueio duplo do adversário."
+                "{attacker} solta a mão direita, mas esbarra no bloqueio duplo do adversário.",
+                "{attacker} projeta o Direto com tanta força que perde levemente o equilíbrio após passar no vazio!"
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, true, 'Striking');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Direto', level, null, true, 'Striking');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,13 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            // Envia o Embed separado de Status / Confronto Atk vs Def
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

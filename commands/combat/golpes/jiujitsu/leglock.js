@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} entra na chave de calcanhar/joelho, torce a articulação inferior e faz o oponente gritar de dor batendo três vezes!",
-                "{attacker} encaixa um Leglock brutal no tornozelo! O adversário dá o tapout imediato para evitar lesão grave!"
+                "{attacker} encaixa um Leglock brutal no tornozelo! O adversário dá o tapout imediato para evitar lesão grave!",
+                "{attacker} isola o calcanhar com a chave de calcanhar (Heel Hook) ajustada, hiperextendendo os ligamentos até a desistência!",
+                "{attacker} trava a botinha de reta de pé com pressão cirúrgica e força o batimento instantâneo!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} domina a perna do oponente, cruza os pés no quadril e começa a esticar a articulação.",
-                "{attacker} ataca a chave de pé reta com forte pressão de alavanca."
+                "{attacker} ataca a chave de pé reta com forte pressão de alavanca.",
+                "{attacker} captura o tornozelo do rival e aplica força contínua no peito do pé.",
+                "{attacker} encaixa o emaranhado de pernas no Knee Bar e gera enorme tensão no joelho do oponente."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} busca o domínio da perna por baixo, mantendo o oponente sob constante ameaça.",
-                "{attacker} engancha o tornozelo do adversário para desequilibrá-lo."
+                "{attacker} engancha o tornozelo do adversário para desequilibrá-lo.",
+                "{attacker} tenta ajustar a pegada no calcanhar, mas o rival defende escondendo o pé."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} ataca a perna, mas o oponente escorrega o calcanhar e toma o controle por cima!",
-                "{attacker} perde a trava de joelho e fica vulnerável ao Ground and Pound."
+                "{attacker} perde a trava de joelho e fica vulnerável ao Ground and Pound.",
+                "{attacker} afoba-se na busca do pé e cede a passagem de guarda sem oferecer perigo real."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Leglock', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

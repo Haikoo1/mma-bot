@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} isola um braço, lança a perna por cima do pescoço e tranca o Triângulo com ângulo perfeito! O oponente apaga no chão!",
-                "{attacker} puxa a cabeça do adversário e ajusta a trava de pernas! Sem oxigênio, o oponente dá o tapout!"
+                "{attacker} puxa a cabeça do adversário e ajusta a trava de pernas! Sem oxigênio, o oponente dá o tapout!",
+                "{attacker} ganchos de perna perfeitos no pescoço, puxa a cabeça para baixo e força uma desistência fulminante!",
+                "{attacker} encaixa a chave de triângulo com pressão cirúrgica nas carótidas, deixando o rival completamente sem reação!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} fecha a trava de pernas no pescoço do oponente e começa a puxar o braço atravessado.",
-                "{attacker} ajusta o ângulo do quadril e aumenta drasticamente a pressão respiratória do adversário."
+                "{attacker} ajusta o ângulo do quadril e aumenta drasticamente a pressão respiratória do adversário.",
+                "{attacker} domina a cabeça do adversário na guarda e trava o triângulo de forma sufocante.",
+                "{attacker} atravessa o braço do rival e aperta a trava de pernas com muita força."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} engata as pernas em volta do pescoço, mas o oponente consegue posturar para evitar o arrocho total.",
-                "{attacker} ataca no Triângulo e mantém o adversário preso sob controle por baixo."
+                "{attacker} ataca no Triângulo e mantém o adversário preso sob controle por baixo.",
+                "{attacker} tenta fechar o triângulo, contudo o rival consegue defender parcialmente o alinhamento das pernas."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta o bote no Triângulo, mas o oponente joga a postura alta, escorrega o braço e escapa!",
-                "{attacker} não consegue fechar a trava de pernas e fica em posição desvantajosa por baixo."
+                "{attacker} não consegue fechar a trava de pernas e fica em posição desvantajosa por baixo.",
+                "{attacker} projeta as pernas, mas escorrega no ajuste e acaba cedendo a passagem de guarda."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Triângulo', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

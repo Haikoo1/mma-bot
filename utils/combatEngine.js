@@ -12,7 +12,7 @@ function validateUserRole(member, attribute, level) {
 function processRoll(effectiveLevel) {
     const roll = Math.floor(Math.random() * 100) + 1;
 
-    if (effectiveLevel === 5) {
+    if (effectiveLevel >= 5) {
         if (roll <= 10) return 'MISS';
         if (roll <= 40) return 'STAR';
         if (roll <= 75) return 'STAR2';
@@ -37,15 +37,22 @@ function processRoll(effectiveLevel) {
 }
 
 function buildAttackEmbed(data) {
-    const { attacker, moveName, level, effectiveLevel, outcomeData, alertMessage } = data;
+    const { attacker, moveName, level, effectiveLevel, outcomeData, alertMessage, isCounter } = data;
 
     const rawNarrative = outcomeData.texts[Math.floor(Math.random() * outcomeData.texts.length)];
     const narrative = rawNarrative.replace(/{attacker}/g, `<@${attacker.id}>`);
     const gifUrl = outcomeData.gifs[Math.floor(Math.random() * outcomeData.gifs.length)];
 
+    let levelDisplay = `\`Nível ${level}/5\``;
+    if (effectiveLevel < level) {
+        levelDisplay = `\`Nível ${level}\` *(Cansaço/Penalidade: Nível ${effectiveLevel})*`;
+    } else if (effectiveLevel > level) {
+        levelDisplay = `\`Nível ${level}\` *(⚡ Contragolpe Ativo: Nível ${effectiveLevel})*`;
+    }
+
     const embed = new EmbedBuilder()
         .setAuthor({ 
-            name: `Ação RP • ${moveName.toUpperCase()}`, 
+            name: `Ação RP • ${moveName.toUpperCase()}${isCounter ? ' [CONTRAGOLPE]' : ''}`, 
             iconURL: attacker.displayAvatarURL() 
         })
         .setTitle(`${outcomeData.emoji} ${outcomeData.title}`)
@@ -53,7 +60,7 @@ function buildAttackEmbed(data) {
         .setDescription(`>>> ${narrative}`)
         .addFields(
             { name: '🥊 Lutador', value: `<@${attacker.id}>`, inline: true },
-            { name: '📊 Nível Executado', value: effectiveLevel < level ? `\`Nível ${level}\` *(Cansaço: Nível ${effectiveLevel})*` : `\`Nível ${level}/5\``, inline: true }
+            { name: '📊 Nível Executado', value: levelDisplay, inline: true }
         )
         .setImage(gifUrl)
         .setFooter({ text: 'MMA RP • Sistema Narrativo Oficial' })

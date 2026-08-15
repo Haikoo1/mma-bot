@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} explode as pernas no chão, tira o peso do oponente, se levanta instantaneamente e sepulta a luta no chão!",
-                "{attacker} escala a grade com postura impecável, empurra o oponente e volta a lutar de pé totalmente livre!"
+                "{attacker} escala a grade com postura impecável, empurra o oponente e volta a lutar de pé totalmente livre!",
+                "{attacker} dá um estouro de quadril poderoso, estica os braços e fica de pé limpando qualquer pegada do rival!",
+                "{attacker} usa a explosão muscular para escapar do chão num piscar de olhos e recupera o centro do octógono!"
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} ganha a esgrima por baixo, apoia as mãos no solo e consegue se colocar de pé.",
-                "{attacker} usa a grade como apoio, empurra o adversário e recupera a postura ereta."
+                "{attacker} usa a grade como apoio, empurra o adversário e recupera a postura ereta.",
+                "{attacker} trabalha bem a base de quatro apoios e se levanta se desvencilhando do oponente.",
+                "{attacker} força a subida com a ajuda do braço de apoio e rompe a pegada do adversário!"
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
@@ -31,17 +35,19 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} fica de joelhos e tenta subir, mas o oponente ainda mantém o grampo na cintura.",
-                "{attacker} consegue ficar de pé, porém continua prensado de costas na grade."
+                "{attacker} consegue ficar de pé, porém continua prensado de costas na grade.",
+                "{attacker} se levanta com bastante desgaste, ainda preso nas garras do oponente."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
-            title: 'FALHA AO LEVANTA-SE',
+            title: 'FALHA AO LEVANTAR-SE',
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta se levantar, mas o oponente puxa suas pernas e o derruba de volta no solo.",
-                "{attacker} abre brecha ao tentar subir e continua sob domínio por baixo."
+                "{attacker} abre brecha ao tentar subir e continua sob domínio por baixo.",
+                "{attacker} força a subida sem postura e é amassado de volta contra o chão."
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'Wrestling');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Levantar', level, null, false, 'Wrestling');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

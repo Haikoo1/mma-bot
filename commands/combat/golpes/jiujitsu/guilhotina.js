@@ -10,8 +10,10 @@ module.exports = {
             title: 'GUILHOTINA FATAL! TAPOUT!',
             color: 0x9b59b6,
             texts: [
-                "{attacker} abraça a cabeça no guilhotina, puxa para a guarda e fecha o quadril com extrema pressão! O oponente bate instantaneamente!",
-                "{attacker} pega a guilhotina de pé durante a entrada de queda do oponente e o faz desistir antes mesmo de tocar o solo!"
+                "{attacker} abraça a cabeça na guilhotina, puxa para a guarda e fecha o quadril com extrema pressão! O oponente bate instantaneamente!",
+                "{attacker} pega a guilhotina de pé durante a entrada de queda do oponente e o faz desistir antes mesmo de tocar o solo!",
+                "{attacker} engata a guilhotina dez dedos com arrocho absoluto! O adversário bate no desespero para não apagar!",
+                "{attacker} passa o braço fundo pelo pescoço, fecha a guarda e espreme até o oponente pedir para parar!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} trava o pescoço do adversário na guilhotina e começa a arrochar a pegada no chão.",
-                "{attacker} ajusta o braço por baixo da garganta do oponente, criando grande perigo na posição."
+                "{attacker} ajusta o braço por baixo da garganta do oponente, criando grande perigo na posição.",
+                "{attacker} fecha o cinto de braço na garganta do rival e eleva os cotovelos gerando sufoco.",
+                "{attacker} captura a cabeça do adversário e mantém a pressão forte na respiração."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} encaixa a pegada no pescoço, mas o oponente consegue apoiar a mão para aliviar a respiração.",
-                "{attacker} tenta arrochar a guilhotina sem fechar a guarda por completo."
+                "{attacker} tenta arrochar a guilhotina sem fechar a guarda por completo.",
+                "{attacker} envolve a cabeça do adversário, porém ele coloca a mão no quadril para aliviar o aperto."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta a guilhotina, mas o oponente tira a cabeça e cai passado no lado oposto!",
-                "{attacker} perde a pegada no pescoço e fica por baixo no solo."
+                "{attacker} perde a pegada no pescoço e fica por baixo no solo.",
+                "{attacker} afoba-se no bote da guilhotina, escorrega a mão e acaba aceitando a pressão por baixo."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,12 +72,12 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Guilhotina', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
             attacker,
-            moveName: this.name,
+            moveName: 'Guilhotina',
             level,
             effectiveLevel,
             outcomeData,
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

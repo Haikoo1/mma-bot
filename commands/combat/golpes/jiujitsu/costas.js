@@ -11,7 +11,9 @@ module.exports = {
             color: 0x9b59b6,
             texts: [
                 "{attacker} ajusta os dois ganchos nas costas, fecha o triângulo de corpo e estabelece a pegada de cinto de segurança perfeita!",
-                "{attacker} pega as costas com maestria e deixa o adversário sem qualquer rota de saída!"
+                "{attacker} pega as costas com maestria e deixa o adversário sem qualquer rota de saída!",
+                "{attacker} transita como uma sombra para as costas do oponente, travando a cintura e abrindo o caminho das finalizações!",
+                "{attacker} escala o tronco do rival, tranca os ganchos nas virilhas e domina as costas de forma implacável!"
             ],
             gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
@@ -21,7 +23,9 @@ module.exports = {
             color: 0xf1c40f,
             texts: [
                 "{attacker} transita para o dorso do oponente e coloca os ganchos.",
-                "{attacker} moita nas costas do adversário e abre caminho para finalizações."
+                "{attacker} moita nas costas do adversário e abre caminho para finalizações.",
+                "{attacker} engata a pegada de cinto de segurança (Seatbelt) e trava o tronco por trás.",
+                "{attacker} consolida o domínio de costas mantendo o oponente sob constante ameaça."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -31,7 +35,8 @@ module.exports = {
             color: 0x2ecc71,
             texts: [
                 "{attacker} encaixa apenas um gancho nas costas enquanto o oponente tenta girar.",
-                "{attacker} mantêm o cinto de segurança no tronco com o oponente de lado."
+                "{attacker} mantém o cinto de segurança no tronco com o oponente de lado.",
+                "{attacker} alcança o dorso do oponente, mas não consegue fixar os dois ganchos firmemente."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -41,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta moitar nas costas, mas escorrega pela frente do oponente!",
-                "{attacker} perde a posição e fica preso por baixo."
+                "{attacker} perde a posição e fica preso por baixo.",
+                "{attacker} projeta-se para a tomada de costas, mas o rival gira o quadril a tempo e frustra o domínio."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
@@ -66,7 +72,7 @@ module.exports = {
         const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
 
-        const hitResult = FightManager.registerHit(message.channel, attacker, tier, level, false, 'BJJ');
+        const hitResult = FightManager.registerHit(message.channel, attacker, 'Pegada de Costas', level, null, false, 'BJJ');
         if (hitResult && hitResult.isFoul) return;
 
         const embed = buildAttackEmbed({
@@ -80,8 +86,12 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult && hitResult.pendingFinish) {
-            FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+        if (hitResult) {
+            await FightManager.sendHitResult(message.channel, hitResult);
+
+            if (hitResult.pendingFinish) {
+                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
+            }
         }
     }
 };

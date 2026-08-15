@@ -43,10 +43,18 @@ client.once('ready', () => {
 });
 
 client.on('messageCreate', async message => {
-    if (message.author.bot || !message.guild || !message.content.startsWith(PREFIX)) return;
+    if (message.author.bot || !message.guild) return;
 
-    const args = message.content.slice(PREFIX.length).trim().split(/ +/);
-    const fullCmd = args.shift().toLowerCase();
+    // Regex para detectar o prefixo '-' ou a menção ao bot (@Bot ou @BotApelido)
+    const prefixRegex = new RegExp(`^(<@!?${client.user.id}>|${PREFIX})\\s*`);
+    if (!prefixRegex.test(message.content)) return;
+
+    const matched = message.content.match(prefixRegex);
+    const args = message.content.slice(matched[0].length).trim().split(/ +/);
+    const fullCmd = args.shift()?.toLowerCase();
+
+    // Caso o usuário apenas mencione o bot sem enviar nenhum comando
+    if (!fullCmd) return;
 
     // Rota direta para retomar lutas paralisadas
     if (fullCmd === 'retomar') {
@@ -56,7 +64,7 @@ client.on('messageCreate', async message => {
         return;
     }
 
-    // 1. Processa Comandos Sem Nível (ex: -luta, -round, -recuperar, -finta, -pesagem)
+    // 1. Processa Comandos Sem Nível (ex: -luta, @Bot decisao, -help, @Bot recuperar)
     const directCommand = client.commands.get(fullCmd);
     if (directCommand && (!directCommand.attribute || directCommand.noLevel)) {
         try {
@@ -68,7 +76,7 @@ client.on('messageCreate', async message => {
         }
     }
 
-    // 2. Processa Comandos Com Nível Obrigatório 1 a 5 (ex: -jab1 até 5, -armlock1 até 5)
+    // 2. Processa Comandos Com Nível Obrigatório 1 a 5 (ex: @Bot jab3, -armlock4)
     const skillMatch = fullCmd.match(/^([a-z]+)([1-5])$/);
     if (skillMatch) {
         const commandName = skillMatch[1];

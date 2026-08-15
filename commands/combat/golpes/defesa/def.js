@@ -1,4 +1,5 @@
 const { validateUserRole, processRoll, buildAttackEmbed } = require('../../../../utils/combatEngine');
+const { FightManager } = require('../../../../utils/fightManager');
 
 module.exports = {
     name: 'def',
@@ -6,11 +7,13 @@ module.exports = {
     outcomes: {
         GEM: {
             emoji: '💎',
-            title: 'DEFENSE IMPENETRÁVEL / ESQUIVA PERFEITA',
+            title: 'DEFESA IMPENETRÁVEL / ESQUIVA PERFEITA',
             color: 0x2ecc71,
             texts: [
                 "{attacker} ergue uma guarda dupla perfeita, absorve toda a pressão sem sofrer danos e encontra brecha para o contra-ataque!",
-                "{attacker} realiza pendulos espetaculares no tempo exato, fazendo o golpe do oponente cortar apenas o ar!"
+                "{attacker} realiza pendulos espetaculares no tempo exato, fazendo o golpe do oponente cortar apenas o ar!",
+                "{attacker} antecipa o ataque do adversário, fecha os braços em carapaça e rebate a investida sem hesitar!",
+                "{attacker} lê o movimento ofensivo, bloqueia o impacto no centro da base e mantém o controle total da distância!"
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
@@ -20,17 +23,20 @@ module.exports = {
             color: 0x3498db,
             texts: [
                 "{attacker} fecha os antebraços no centro do rosto e absorve o impacto com total controle de base.",
-                "{attacker} recua um passo no tempo exato e frustra a intenção de ataque do oponente."
+                "{attacker} recua um passo no tempo exato e frustra a intenção de ataque do oponente.",
+                "{attacker} amortece a pressão nas luvas, mantendo a postura defensiva intacta.",
+                "{attacker} ergue o escudo de braço e bloqueia com firmeza a investida adversária."
             ],
             gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
-            title: 'DEFENSE PARCIAL',
+            title: 'DEFESA PARCIAL',
             color: 0xf1c40f,
             texts: [
                 "{attacker} amortece o impacto com as luvas, mas ainda sente a pressão da investida.",
-                "{attacker} esquiva atrasado, evitando o golpe direto mas mantendo-se acuado."
+                "{attacker} esquiva atrasado, evitando o golpe direto mas mantendo-se acuado.",
+                "{attacker} absorve parte do ataque na guarda, mas perde o equilíbrio momentaneamente."
             ],
             gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
@@ -40,7 +46,8 @@ module.exports = {
             color: 0xe74c3c,
             texts: [
                 "{attacker} tenta se defender, mas deixa uma brecha aberta no centro da guarda!",
-                "{attacker} hesita no movimento de esquiva e fica vulnerável."
+                "{attacker} hesita no movimento de esquiva e fica vulnerável.",
+                "{attacker} ergue os braços fora do tempo e deixa a linha de ataque desprotegida."
             ],
             gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         }
@@ -52,15 +59,36 @@ module.exports = {
             return message.reply(`❌ Você precisa do cargo de **${this.attribute.toUpperCase()} Nível ${level}**.`);
         }
 
-        const tier = processRoll(level);
+        const fight = FightManager.getFight(message.channel.id);
+        let effectiveLevel = level;
+        let alertMessage = null;
+
+        if (fight) {
+            const attObj = fight.fighters.find(f => f.id === attacker.id);
+            if (attObj && (attObj.stamina < 35 || attObj.hasWeightPenalty)) {
+                effectiveLevel = Math.max(1, level - 1);
+            }
+        }
+
+        const tier = processRoll(effectiveLevel);
         const outcomeData = this.outcomes[tier];
+
+        // ⚡ Ativa a janela de contragolpe caso tire tiragem GEM
+        if (fight) {
+            const attObj = fight.fighters.find(f => f.id === attacker.id);
+            if (attObj && tier === 'GEM') {
+                attObj.counterWindow = true;
+                alertMessage = `⚡ **CONTRAGOLPE ATIVO:** ${attObj.mention} abriu a brecha perfeita e terá **+1 Nível Efetivo** no próximo ataque!`;
+            }
+        }
 
         const embed = buildAttackEmbed({
             attacker,
             moveName: 'Postura Defensiva',
             level,
-            effectiveLevel: level,
-            outcomeData
+            effectiveLevel,
+            outcomeData,
+            alertMessage
         });
 
         return message.reply({ embeds: [embed] });

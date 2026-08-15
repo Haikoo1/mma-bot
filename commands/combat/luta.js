@@ -110,20 +110,6 @@ module.exports = {
             return;
         }
 
-        // 📊 STATUS DA LUTA
-        if (subCommand === 'status') {
-            const fight = FightManager.getFight(message.channel.id);
-            if (!fight) return message.reply('❌ Nenhuma luta ativa neste canal.');
-
-            const mins = Math.floor(fight.timeRemaining / 60);
-            const secs = fight.timeRemaining % 60;
-            const timeFormatted = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-            const statusText = fight.fighters.map(f => `• ${f.mention}: \`${f.damage} pts de dano | ${f.stamina}% Gás\``).join('\n');
-
-            return message.reply(`📊 **STATUS DA LUTA (Round ${fight.currentRound})**\n⏱️ Tempo Restante: \`${timeFormatted}\`\n\n${statusText}`);
-        }
-
         // ⚖️ APURAÇÃO DA DECISÃO (Envia no Privado do Admin)
         if (subCommand === 'decisao') {
             const fight = FightManager.getFight(message.channel.id);
@@ -180,6 +166,6 @@ module.exports = {
             return message.reply('❌ Nenhuma luta ativa para encerrar.');
         }
 
-        return message.reply('❌ Subcomandos válidos: `iniciar`, `teste`, `status`, `decisao`, `nocaute`, `encerrar`.');
+        return message.reply('❌ Subcomandos válidos: `iniciar`, `teste`, `decisao`, `nocaute`, `encerrar`.');
     }
 };

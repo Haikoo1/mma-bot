@@ -4,6 +4,24 @@ const { getStaminaBar, getDamageBar, createBetweenRoundsButtons } = require('./u
 
 const activeFights = new Map();
 
+function createFighterState(user, penalty) {
+    return {
+        id: user.id,
+        mention: user.id === 'NPC_DUMMY' ? '🤖 **NPC de Teste**' : `<@${user.id}>`,
+        username: user.username || 'Lutador',
+        damage: 0,
+        roundDamage: 0,
+        streak: 0,
+        cuts: 0,
+        stamina: penalty ? 95 : 100,
+        hasWeightPenalty: penalty,
+        recuperarUsedThisRound: false,
+        counterWindow: false,
+        roundPoints: 0,
+        totalPoints: 0
+    };
+}
+
 class FightManager {
     static getFight(channelId) {
         return activeFights.get(channelId);
@@ -24,28 +42,8 @@ class FightManager {
             timerInterval: null,
             status: 'WAITING',
             fighters: [
-                { 
-                    id: fighter1User.id, 
-                    mention: `<@${fighter1User.id}>`, 
-                    damage: 0, 
-                    roundDamage: 0, 
-                    streak: 0, 
-                    cuts: 0, 
-                    stamina: f1Penalty ? 95 : 100, 
-                    hasWeightPenalty: f1Penalty, 
-                    recuperarUsedThisRound: false 
-                },
-                { 
-                    id: fighter2User.id, 
-                    mention: `<@${fighter2User.id}>`, 
-                    damage: 0, 
-                    roundDamage: 0, 
-                    streak: 0, 
-                    cuts: 0, 
-                    stamina: f2Penalty ? 95 : 100, 
-                    hasWeightPenalty: f2Penalty, 
-                    recuperarUsedThisRound: false 
-                }
+                createFighterState(fighter1User, f1Penalty),
+                createFighterState(fighter2User, f2Penalty)
             ],
             roundScores: []
         };
@@ -54,8 +52,6 @@ class FightManager {
     }
 
     static createTestFight(channel, fighter1User, fighter2User) {
-        const f2Mention = fighter2User.id === 'NPC_DUMMY' ? '🤖 **NPC de Teste**' : `<@${fighter2User.id}>`;
-
         const w1 = WeightManager.getStatus(fighter1User.id);
         const w2 = fighter2User.id !== 'NPC_DUMMY' ? WeightManager.getStatus(fighter2User.id) : null;
 
@@ -70,28 +66,8 @@ class FightManager {
             timerInterval: null,
             status: 'IN_ROUND',
             fighters: [
-                { 
-                    id: fighter1User.id, 
-                    mention: `<@${fighter1User.id}>`, 
-                    damage: 0, 
-                    roundDamage: 0, 
-                    streak: 0, 
-                    cuts: 0, 
-                    stamina: f1Penalty ? 95 : 100, 
-                    hasWeightPenalty: f1Penalty, 
-                    recuperarUsedThisRound: false 
-                },
-                { 
-                    id: fighter2User.id, 
-                    mention: f2Mention, 
-                    damage: 0, 
-                    roundDamage: 0, 
-                    streak: 0, 
-                    cuts: 0, 
-                    stamina: f2Penalty ? 95 : 100, 
-                    hasWeightPenalty: f2Penalty, 
-                    recuperarUsedThisRound: false 
-                }
+                createFighterState(fighter1User, f1Penalty),
+                createFighterState(fighter2User, f2Penalty)
             ],
             roundScores: []
         };
@@ -123,6 +99,7 @@ class FightManager {
 
         fight.fighters.forEach(f => {
             f.roundDamage = 0;
+            f.roundPoints = 0;
             f.recuperarUsedThisRound = false;
         });
 
@@ -140,7 +117,7 @@ class FightManager {
         return fight;
     }
 
-    static registerHit(channel, attackerUser, tier, level, isCutRisk = true, moveType = 'Striking') {
+    static registerHit(channel, attackerUser, moveName, atkLevel, defLevel = null, isCutRisk = true, moveType = 'Striking') {
         const fight = activeFights.get(channel.id);
         if (!fight || fight.status !== 'IN_ROUND') return null;
 
@@ -152,93 +129,213 @@ class FightManager {
             defenderObj = fight.fighters[0];
         }
 
-        const baseStaminaCost = level >= 4 ? 15 : 8;
+        // ⚡ Verificação e Consumo de Contragolpe (+1 Nível Efetivo se Ativo)
+        let effectiveAtkLevel = atkLevel;
+        let wasCounter = false;
+
+        if (attackerObj.counterWindow) {
+            effectiveAtkLevel = Math.min(5, atkLevel + 1);
+            attackerObj.counterWindow = false;
+            wasCounter = true;
+        }
+
+        // Cálculo dinâmico de defesa se não fornecido
+        if (defLevel === null) {
+            const staminaFactor = defenderObj.stamina > 50 ? 1 : 0;
+            defLevel = Math.min(5, Math.max(1, Math.floor(Math.random() * 3) + 1 + staminaFactor));
+        }
+
+        // Gasto de Stamina proporcional
+        const baseStaminaCost = effectiveAtkLevel * 3;
         const extraWeightCost = attackerObj.hasWeightPenalty ? 5 : 0;
         attackerObj.stamina = Math.max(0, attackerObj.stamina - (baseStaminaCost + extraWeightCost));
 
-        let alertMessage = null;
-        let pendingFinish = null;
-
+        // Pausa por golpe ilegal (2% de chance)
         if (Math.random() < 0.02) {
             const fouls = ['Chute na Virilha', 'Dedada no Olho', 'Golpe na Nuca'];
             const foulType = fouls[Math.floor(Math.random() * fouls.length)];
             this.pauseForFoul(channel, fight, attackerObj.mention, defenderObj.mention, foulType);
-            return { fight, defenderObj, alertMessage: '🛑 Luta paralisada por golpe ilegal!', isFoul: true };
+            return { fight, alertMessage: '🛑 Luta paralisada por golpe ilegal!', isFoul: true };
         }
 
-        if (tier === 'MISS') {
+        // CÁLCULO REBALANCEADO (MAX DANO: 20 PTS)
+        const netValue = effectiveAtkLevel - defLevel;
+        let hitResult = "";
+        let damageValue = 0;
+        let pointsGained = 0;
+        let alertMessage = null;
+        let pendingFinish = null;
+
+        if (netValue <= -2) {
+            hitResult = "🛡️ **DEFESA PERFEITA:** O oponente esquivou ou bloqueou totalmente o golpe sem sofrer impacto!";
+            damageValue = 0;
+            pointsGained = 0;
             defenderObj.streak = 0;
+            defenderObj.counterWindow = true;
+            alertMessage = `⚡ **CONTRAGOLPE ENCAIXADO:** ${defenderObj.mention} abriu brecha e terá bônus no próximo ataque!`;
+        } else if (netValue <= 0) {
+            hitResult = "⚠️ **DEFESA PARCIAL (STAR):** O golpe foi amortecido pela guarda, causando apenas dano mínimo.";
+            damageValue = 1; // 1 Ponto de dano
+            pointsGained = 2;
+            defenderObj.streak = 0;
+        } else if (netValue <= 2) {
+            hitResult = "💥 **GOLPE LIMPO (STAR2):** O ataque furou a guarda e conectou com precisão no alvo!";
+            damageValue = 4; // 4 Pontos de dano (5 conexões seguidas = 20 Pts = KO)
+            pointsGained = 6;
+            defenderObj.streak += 1;
         } else {
-            const damageValue = tier === 'STAR' ? 1 : tier === 'STAR2' ? 2 : 4;
-            defenderObj.damage += damageValue;
-            defenderObj.roundDamage += damageValue;
-            
-            if (tier === 'STAR2' || tier === 'GEM') {
-                defenderObj.streak += 1;
+            hitResult = "🔥 **GOLPE CRÍTICO (GEM):** O ataque superou completamente a defesa e causou estragos graves!";
+            damageValue = 7; // 7 Pontos de dano
+            pointsGained = 10;
+            defenderObj.streak += 2;
+        }
 
-                if (isCutRisk) {
-                    const cutChance = tier === 'GEM' ? 0.7 : 0.3;
-                    if (Math.random() < cutChance && defenderObj.cuts < 3) {
-                        defenderObj.cuts += 1;
-                    }
-                }
-            }
+        defenderObj.damage += damageValue;
+        defenderObj.roundDamage += damageValue;
+        attackerObj.roundPoints += pointsGained;
+        attackerObj.totalPoints += pointsGained;
 
-            if (defenderObj.cuts === 2) {
-                alertMessage = `🩸 **SANGRAMENTO INTENSO:** ${defenderObj.mention} sofreu um corte profundo no rosto!`;
-            } else if (defenderObj.cuts >= 3) {
-                pendingFinish = { type: 'TKO_MEDICAL', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Interrupção médica por corte severo' };
-            }
-
-            if (defenderObj.streak >= 2 || defenderObj.damage >= 6) {
-                alertMessage = alertMessage 
-                    ? `${alertMessage}\n⚠️ **PERIGO:** ${defenderObj.mention} está grogue e perto do nocaute!`
-                    : `⚠️ **ALERTA DE CRÍTICO:** ${defenderObj.mention} absorveu golpes pesados!`;
-            }
-
-            if (!pendingFinish && (defenderObj.damage >= 10 || (tier === 'GEM' && defenderObj.damage >= 6))) {
-                if (moveType === 'Grappling' || moveType === 'BJJ') {
-                    const subStyle = Math.random() < 0.5 ? 'Bateu 3 vezes (Tapout)' : 'Apagou no golpe de ajuste';
-                    pendingFinish = { type: 'SUBMISSION', loser: defenderObj.mention, winner: attackerObj.mention, reason: subStyle };
-                } else if (tier === 'GEM') {
-                    pendingFinish = { type: 'KO', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Nocaute brutal (Luta em pé / Ground and Pound)' };
-                } else {
-                    pendingFinish = { type: 'TKO', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Interrupção do árbitro por falta de defesa' };
-                }
+        // Teste de Corte / Sangramento
+        if (damageValue >= 4 && isCutRisk) {
+            const cutChance = netValue >= 3 ? 0.5 : 0.20;
+            if (Math.random() < cutChance && defenderObj.cuts < 3) {
+                defenderObj.cuts += 1;
             }
         }
 
-        return { fight, attackerObj, defenderObj, alertMessage, pendingFinish };
+        if (defenderObj.cuts === 2) {
+            alertMessage = alertMessage 
+                ? `${alertMessage}\n🩸 **SANGRAMENTO INTENSO:** ${defenderObj.mention} sofreu um corte profundo no rosto!`
+                : `🩸 **SANGRAMENTO INTENSO:** ${defenderObj.mention} sofreu um corte profundo no rosto!`;
+        } else if (defenderObj.cuts >= 3) {
+            pendingFinish = { type: 'TKO_MEDICAL', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Interrupção médica por corte severo' };
+        }
+
+        if (defenderObj.damage >= 12 && !pendingFinish) {
+            alertMessage = alertMessage 
+                ? `${alertMessage}\n⚠️ **PERIGO:** ${defenderObj.mention} está grogue e perto do nocaute!`
+                : `⚠️ **ALERTA DE CRÍTICO:** ${defenderObj.mention} absorveu pancadas pesadas!`;
+        }
+
+        // Condições de Encerramento (Teto de 20 Pontos de Dano)
+        if (!pendingFinish && defenderObj.damage >= 20) {
+            if (moveType === 'Grappling' || moveType === 'BJJ') {
+                pendingFinish = { type: 'SUBMISSION', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Bateu em desistência (Tapout)' };
+            } else if (netValue >= 3) {
+                pendingFinish = { type: 'KO', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Nocaute brutal e imediato' };
+            } else {
+                pendingFinish = { type: 'TKO', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Interrupção do árbitro por falta de defesa' };
+            }
+        }
+
+        return {
+            fight,
+            attackerObj,
+            defenderObj,
+            moveName,
+            atkLevel: effectiveAtkLevel,
+            defLevel,
+            netValue,
+            hitResult,
+            damageValue,
+            alertMessage,
+            pendingFinish,
+            wasCounter
+        };
+    }
+
+    static sendHitResult(channel, result) {
+        const { attackerObj, defenderObj, moveName, atkLevel, defLevel, damageValue, hitResult, alertMessage, wasCounter } = result;
+
+        const embed = new EmbedBuilder()
+            .setTitle(`⚡ RELATÓRIO DE CONFRONTO • ${moveName.toUpperCase()}${wasCounter ? ' (⚡ CONTRAGOLPE)' : ''}`)
+            .setColor(damageValue >= 4 ? 0xe74c3c : damageValue >= 1 ? 0xe67e22 : 0x3498db)
+            .setDescription(`>>> ${hitResult}`)
+            .addFields(
+                { 
+                    name: '🎯 CONFRONTO DIRETO (Atk vs Def)', 
+                    value: `• **Ataque (${attackerObj.mention}):** Nível \`${atkLevel}\`\n• **Defesa (${defenderObj.mention}):** Nível \`${defLevel}\`\n• **Dano Infligido:** \`+${damageValue} pts\``,
+                    inline: false 
+                },
+                {
+                    name: `🥊 ${attackerObj.mention}`,
+                    value: `Gás: ${getStaminaBar(attackerObj.stamina)}\nDano: ${getDamageBar(attackerObj.damage)}`,
+                    inline: true
+                },
+                {
+                    name: `🛡️ ${defenderObj.mention}`,
+                    value: `Gás: ${getStaminaBar(defenderObj.stamina)}\nDano: ${getDamageBar(defenderObj.damage)}${defenderObj.cuts > 0 ? `\n(🩸 Cortes: ${defenderObj.cuts}/3)` : ''}`,
+                    inline: true
+                }
+            )
+            .setFooter({ text: 'Octagon Engine • MMA RP' })
+            .setTimestamp();
+
+        if (alertMessage) {
+            embed.addFields({ name: '📢 Nota do Octógono', value: alertMessage, inline: false });
+        }
+
+        return channel.send({ embeds: [embed] });
     }
 
     static executeFinish(channel, fight, finishData) {
         if (fight.timerInterval) clearInterval(fight.timerInterval);
         fight.status = 'FINISHED';
 
+        const gifs = {
+            KO: [
+                "https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif",
+                "https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif",
+                "https://media.giphy.com/media/3o6ZtqBngA3m0Q5B9S/giphy.gif",
+                "https://media.giphy.com/media/l0HlCqV35hdEg2GU0/giphy.gif",
+                "https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"
+            ],
+            TKO: [
+                "https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif",
+                "https://media.giphy.com/media/l0HlVJ1E93c4nF4cM/giphy.gif",
+                "https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif",
+                "https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif",
+                "https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"
+            ],
+            SUBMISSION: [
+                "https://media.giphy.com/media/xT1XGXf97Xv4281y3S/giphy.gif",
+                "https://media.giphy.com/media/3o7TKT06f8mK15y7M4/giphy.gif",
+                "https://media.giphy.com/media/l0HlSg9N5L6bQJg9a/giphy.gif",
+                "https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif",
+                "https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"
+            ]
+        };
+
         let title = "";
         let color = 0x8e44ad;
         let detailText = "";
+        let pool = gifs.KO;
 
         if (finishData.type === 'KO') {
             title = "💥 NOCAUTE (KO)!";
             color = 0x9b59b6;
-            detailText = `**Modalidade:** Nocaute Direto (Luta em Pé / Ground and Pound)\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
+            detailText = `**Modalidade:** Nocaute Direto\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
+            pool = gifs.KO;
         } else if (finishData.type === 'TKO' || finishData.type === 'TKO_MEDICAL') {
             title = "🛑 NOCAUTE TÉCNICO (TKO)!";
             color = 0xe74c3c;
-            detailText = `**Modalidade:** Interrupção do Árbitro / Médica\n**Motivo:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}`;
+            detailText = `**Modalidade:** Interrupção do Árbitro / Médica\n**Motivo:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
+            pool = gifs.TKO;
         } else if (finishData.type === 'SUBMISSION') {
             title = "🥋 FINALIZAÇÃO (SUBMISSION)!";
             color = 0x2ecc71;
-            detailText = `**Modalidade:** Luta no Chão / BJJ\n**Desfecho:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}`;
+            detailText = `**Modalidade:** Luta no Chão / BJJ\n**Desfecho:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
+            pool = gifs.SUBMISSION;
         }
+
+        const selectedGif = pool[Math.floor(Math.random() * pool.length)];
 
         const embed = new EmbedBuilder()
             .setTitle(title)
             .setColor(color)
             .setDescription(`>>> ${detailText}`)
             .addFields({ name: '⏱️ Round de Encerramento', value: `Round ${fight.currentRound}` })
-            .setImage("https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif")
+            .setImage(selectedGif)
             .setTimestamp();
 
         channel.send({ embeds: [embed] });
@@ -276,37 +373,47 @@ class FightManager {
         let f1Score = 10;
         let f2Score = 10;
 
-        const diff = f1.roundDamage - f2.roundDamage;
+        // Avaliação de Súmulas Baseada em Dano + Pontos Táticos
+        const f1Perf = f1.roundDamage * 2 + f1.roundPoints;
+        const f2Perf = f2.roundDamage * 2 + f2.roundPoints;
+        const diff = f1Perf - f2Perf;
 
-        if (diff >= 4) { f1Score = 10; f2Score = 8; }
+        if (diff >= 18) { f1Score = 10; f2Score = 8; }
         else if (diff > 0) { f1Score = 10; f2Score = 9; }
-        else if (diff <= -4) { f1Score = 8; f2Score = 10; }
+        else if (diff <= -18) { f1Score = 8; f2Score = 10; }
         else if (diff < 0) { f1Score = 9; f2Score = 10; }
 
         fight.roundScores.push({ round: fight.currentRound, f1: f1Score, f2: f2Score });
 
         const statusList = fight.fighters.map(f => {
             const cutStatus = f.cuts === 1 ? '🩹 Corte Leve' : f.cuts === 2 ? '🩸 Corte Profundo' : '✅ Íntegro';
-            return `**Atleta:** ${f.mention}\n• **Gás:** ${getStaminaBar(f.stamina)}\n• **Dano:** ${getDamageBar(f.damage)}\n• **Estado:** ${cutStatus}\n`;
+            const counterStatus = f.counterWindow ? '⚡ *Contragolpe Pronto*' : '➖ *Neutro*';
+            return `**Atleta:** ${f.mention}\n• **Gás:** ${getStaminaBar(f.stamina)}\n• **Dano:** ${getDamageBar(f.damage)}\n• **Estado:** ${cutStatus} | ${counterStatus}\n`;
         }).join('\n');
 
         const embed = new EmbedBuilder()
             .setTitle(`🔔 FIM DO ROUND ${fight.currentRound}!`)
             .setColor(0x3498db)
-            .setDescription(`Tempo regulamentar encerrado!\nUtilize os botões abaixo para realizar suas ações de intervalo.`)
+            .setDescription(`Tempo regulamentar encerrado!\nSúmula do Round: **${f1.mention} ${f1Score} x ${f2Score} ${f2.mention}**\nUtilize os botões abaixo para realizar suas ações de intervalo.`)
             .addFields({ name: '📊 Condição Física dos Atletas', value: statusList })
             .setTimestamp();
+
+        // Reseta contadores de round após pontuação
+        fight.fighters.forEach(f => {
+            f.roundDamage = 0;
+            f.roundPoints = 0;
+            f.recuperarUsedThisRound = false;
+        });
 
         const buttonsRow = createBetweenRoundsButtons();
 
         channel.send({ embeds: [embed], components: [buttonsRow] });
     }
 
-static calculateDecisionScores(fight) {
+    static calculateDecisionScores(fight) {
         const f1 = fight.fighters[0];
         const f2 = fight.fighters[1];
 
-        // Nomes dos juízes oficiais de MMA
         const judges = ['Sal D\'Amato', 'Derek Cleary', 'Mike Bell'];
         const judgeCards = judges.map(name => ({
             name,
@@ -316,15 +423,13 @@ static calculateDecisionScores(fight) {
             f2Total: 0
         }));
 
-        // Calcula a pontuação individual de cada juiz round por round
         fight.roundScores.forEach(r => {
-            const diff = r.f1 - r.f2; // Diferença de dano gravada no round
+            const diff = r.f1 - r.f2;
 
             judgeCards.forEach(judge => {
                 let j1 = 10;
                 let j2 = 10;
 
-                // Variação leve e realista de leitura dos juízes em rounds parelhos (~15% de divergência)
                 let divergence = 0;
                 if (Math.abs(diff) <= 1 && Math.random() < 0.15) {
                     divergence = diff > 0 ? -1 : 1;
@@ -332,9 +437,9 @@ static calculateDecisionScores(fight) {
 
                 const effectiveDiff = diff + divergence;
 
-                if (effectiveDiff >= 4) { j1 = 10; j2 = 8; }
+                if (effectiveDiff >= 2) { j1 = 10; j2 = 8; }
                 else if (effectiveDiff > 0) { j1 = 10; j2 = 9; }
-                else if (effectiveDiff <= -4) { j1 = 8; j2 = 10; }
+                else if (effectiveDiff <= -2) { j1 = 8; j2 = 10; }
                 else if (effectiveDiff < 0) { j1 = 9; j2 = 10; }
                 else { j1 = 10; j2 = 10; }
 
@@ -345,7 +450,6 @@ static calculateDecisionScores(fight) {
             });
         });
 
-        // Contabiliza o veredito de cada juiz
         let f1Votes = 0;
         let f2Votes = 0;
         let drawVotes = 0;
@@ -365,7 +469,6 @@ static calculateDecisionScores(fight) {
             return `👨‍⚖️ **${j.name}:** \`${j.f1Total} - ${j.f2Total}\` *(Vencedor: ${verdict})*`;
         }).join('\n');
 
-        // Determina o tipo de decisão oficial
         let decisionType = "";
         let winnerMention = "";
 
