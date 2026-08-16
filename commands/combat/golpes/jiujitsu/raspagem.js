@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} projeta o quadril com precisão milimétrica, tomba o adversário e consolida o domínio no chão!",
                 "{attacker} arma o ganchinho perfeito na guarda, raspa o rival com facilidade e assume o topo!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} troca as pegadas no calção e consegue a inversão segura de posição.",
                 "{attacker} empurra o joelho do rival com o pé e garante a raspagem limpa."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} força o desequilíbrio e melhora o ângulo da guarda.",
                 "{attacker} engata a alavanca de raspagem, mas o oponente abre a base e se segura."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o gancho de perna durante a tentativa de sweep.",
                 "{attacker} força o balanço por baixo, mas escorrega a pegada e fica em posição vulnerável."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

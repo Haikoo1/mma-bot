@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} engata a guilhotina dez dedos com arrocho absoluto! O adversário bate no desespero para não apagar!",
                 "{attacker} passa o braço fundo pelo pescoço, fecha a guarda e espreme até o oponente pedir para parar!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} fecha o cinto de braço na garganta do rival e eleva os cotovelos gerando sufoco.",
                 "{attacker} captura a cabeça do adversário e mantém a pressão forte na respiração."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} tenta arrochar a guilhotina sem fechar a guarda por completo.",
                 "{attacker} envolve a cabeça do adversário, porém ele coloca a mão no quadril para aliviar o aperto."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde a pegada no pescoço e fica por baixo no solo.",
                 "{attacker} afoba-se no bote da guilhotina, escorrega a mão e acaba aceitando a pressão por baixo."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

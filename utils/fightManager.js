@@ -282,60 +282,29 @@ class FightManager {
         if (fight.timerInterval) clearInterval(fight.timerInterval);
         fight.status = 'FINISHED';
 
-        const gifs = {
-            KO: [
-                "https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif",
-                "https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif",
-                "https://media.giphy.com/media/3o6ZtqBngA3m0Q5B9S/giphy.gif",
-                "https://media.giphy.com/media/l0HlCqV35hdEg2GU0/giphy.gif",
-                "https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"
-            ],
-            TKO: [
-                "https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif",
-                "https://media.giphy.com/media/l0HlVJ1E93c4nF4cM/giphy.gif",
-                "https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif",
-                "https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif",
-                "https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"
-            ],
-            SUBMISSION: [
-                "https://media.giphy.com/media/xT1XGXf97Xv4281y3S/giphy.gif",
-                "https://media.giphy.com/media/3o7TKT06f8mK15y7M4/giphy.gif",
-                "https://media.giphy.com/media/l0HlSg9N5L6bQJg9a/giphy.gif",
-                "https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif",
-                "https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"
-            ]
-        };
-
         let title = "";
         let color = 0x8e44ad;
         let detailText = "";
-        let pool = gifs.KO;
 
         if (finishData.type === 'KO') {
             title = "💥 NOCAUTE (KO)!";
             color = 0x9b59b6;
             detailText = `**Modalidade:** Nocaute Direto\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
-            pool = gifs.KO;
         } else if (finishData.type === 'TKO' || finishData.type === 'TKO_MEDICAL') {
             title = "🛑 NOCAUTE TÉCNICO (TKO)!";
             color = 0xe74c3c;
             detailText = `**Modalidade:** Interrupção do Árbitro / Médica\n**Motivo:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
-            pool = gifs.TKO;
         } else if (finishData.type === 'SUBMISSION') {
             title = "🥋 FINALIZAÇÃO (SUBMISSION)!";
             color = 0x2ecc71;
             detailText = `**Modalidade:** Luta no Chão / BJJ\n**Desfecho:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
-            pool = gifs.SUBMISSION;
         }
-
-        const selectedGif = pool[Math.floor(Math.random() * pool.length)];
 
         const embed = new EmbedBuilder()
             .setTitle(title)
             .setColor(color)
             .setDescription(`>>> ${detailText}`)
             .addFields({ name: '⏱️ Round de Encerramento', value: `Round ${fight.currentRound}` })
-            .setImage(selectedGif)
             .setTimestamp();
 
         channel.send({ embeds: [embed] });

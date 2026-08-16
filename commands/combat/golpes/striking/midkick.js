@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} explode a canela no flanco do rival, fazendo-o cair de joelhos segurando as costelas!",
                 "{attacker} encaixa um Midkick violento de encontro, parando o avanço do adversário no ato!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um Midkick forte no tronco do rival, marcando a pontuação com precisão.",
                 "{attacker} acerta a lateral do corpo do oponente, tirando o ar do adversário momentaneamente."
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} acerta a lateral do corpo do adversário com menos pressão.",
                 "{attacker} chuta na linha de cintura, mas esbarra no bloqueio duplo do rival."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} erra a distância do Midkick e passa direto no vazio.",
                 "{attacker} tenta o chute na linha de cintura, mas o adversário recua e o golpe não conecta."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

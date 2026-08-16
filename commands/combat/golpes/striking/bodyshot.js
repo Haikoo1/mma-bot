@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} manda um cruzado pesado na linha de cintura que dobra o oponente ao meio imediatamente!",
                 "{attacker} esquiva por baixo e soca o abdômen com tanta pressão que tira todo o ar do adversário!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} acerta um golpe seco na boca do estômago do rival, desacelerando o ritmo do combate.",
                 "{attacker} fura a guarda alta e acerta uma pancada forte na lateral das costelas do oponente!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} toca a linha de cintura com o jab de forma superficial.",
                 "{attacker} abaixa para bater no tronco, mas o oponente fecha a guarda e absorve sem impacto."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} erra o soco no tronco e o adversário se afasta com facilidade.",
                 "{attacker} tenta entrar na linha de cintura, mas acerta o ar e fica vulnerável."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

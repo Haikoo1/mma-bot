@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} projeta o quadril para frente, isola a articulação do ombro com o joelho e força a desistência imediata!",
                 "{attacker} encaixa a Omoplata com perfeição cirúrgica, colando o peito do rival no chão e arrancando os três tapinhas!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} trava a perna na axila do rival e força a torção do ombro.",
                 "{attacker} senta para o lado mantendo o braço do oponente preso no triângulo de pernas."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} engancha o ombro do adversário, gerando perigo na posição.",
                 "{attacker} passa a perna no ombro, mas o oponente consegue apoiar a mão livre para atenuar o golpe."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o controle do quadril e cede a passagem de guarda.",
                 "{attacker} tenta esticar a perna, mas escorrega do braço e dá espaço para o oponente subir."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

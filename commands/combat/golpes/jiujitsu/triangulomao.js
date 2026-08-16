@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} escorrega o braço por baixo da axila, fecha o esganamento lateral e força o tapout fulminante!",
                 "{attacker} prensa o ombro do rival contra a própria carótida e aplica uma pressão devastadora de Triângulo de Mão!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} fecha o esganamento na lateral do pescoço e projeta o peso do corpo para achatar o adversário.",
                 "{attacker} ajusta a pegada mão-com-mão por baixo do pescoço, aumentando progressivamente a pressão."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} mantém o controle da cabeça e do braço no chão, somando domínio.",
                 "{attacker} encaixa a pegada inicial, mas o oponente ganha espaço para respirar antes do arrocho final."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde a pegada do braço travado e cede o espaço por cima.",
                 "{attacker} tenta fechar o alicate de braço, mas o adversário gira de costas e desfaz o estrangulamento."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} isola o calcanhar com a chave de calcanhar (Heel Hook) ajustada, hiperextendendo os ligamentos até a desistência!",
                 "{attacker} trava a botinha de reta de pé com pressão cirúrgica e força o batimento instantâneo!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} captura o tornozelo do rival e aplica força contínua no peito do pé.",
                 "{attacker} encaixa o emaranhado de pernas no Knee Bar e gera enorme tensão no joelho do oponente."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} engancha o tornozelo do adversário para desequilibrá-lo.",
                 "{attacker} tenta ajustar a pegada no calcanhar, mas o rival defende escondendo o pé."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde a trava de joelho e fica vulnerável ao Ground and Pound.",
                 "{attacker} afoba-se na busca do pé e cede a passagem de guarda sem oferecer perigo real."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

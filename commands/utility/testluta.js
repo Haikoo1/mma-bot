@@ -75,7 +75,7 @@ module.exports = {
                 return message.reply({ embeds: [embed] });
             }
 
-            // -testluta finalizar <KO|TKO|SUBMISSION> (Testa a tela de vitória e GIFs)
+            // -testluta finalizar <KO|TKO|SUBMISSION> (Testa a tela de vitória)
             case 'finalizar': {
                 const type = args[1]?.toUpperCase() || 'KO';
                 const finishData = {

@@ -15,7 +15,6 @@ module.exports = {
                 "{attacker} executa um desvio lateral milimétrico, deixando a investida do rival passar no vácuo com domínio total!",
                 "{attacker} flexiona os joelhos e pendula no momento exato, saindo limpo do raio de ação ofensivo!"
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -27,7 +26,6 @@ module.exports = {
                 "{attacker} inclina a cabeça para o lado certo e evita a linha direta do golpe.",
                 "{attacker} faz a leitura do ataque e esquiva com leveza sem perder a base."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -38,7 +36,6 @@ module.exports = {
                 "{attacker} raspa o rosto no golpe ao esquivar, reduzindo o impacto.",
                 "{attacker} tenta a esquiva lateral, mas o ataque ainda resvala levemente em seu ombro."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -49,7 +46,6 @@ module.exports = {
                 "{attacker} hesita na movimentação de cabeça e fica vulnerável.",
                 "{attacker} perde o tempo do movimento e é surpreendido em plena trajetória de esquiva."
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         }
     },
 

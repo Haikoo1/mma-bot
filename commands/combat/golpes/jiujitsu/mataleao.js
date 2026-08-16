@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} esconde a mão atrás da nuca do rival e fecha o estrangulamento de costas definitivo!",
                 "{attacker} grampeia as costas com triângulo de corpo e arrocha o Mata-Leão até o desmaio do adversário!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} estabiliza os dois ganchos por trás e busca o queixo do rival com perigo.",
                 "{attacker} arrocha a pressão no pescoço por trás, deixando o oponente em estado de alerta máximo!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} coloca um dos ganchos e busca a brecha no pescoço do adversário.",
                 "{attacker} controla a posição de costas, mas o adversário bloqueia a entrada do braço no queixo."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde os ganchos e o adversário consegue colocar as costas no chão para se safar.",
                 "{attacker} escorrega na tentativa de domínio de costas e cede a posição por cima ao adversário."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

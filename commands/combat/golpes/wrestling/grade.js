@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} trava o rival de costas para o octógono, desferindo ombradas e joelhadas sem dar descanso!",
                 "{attacker} impõe um controle de grade devastador, esmagando o oponente contra a tela sem qualquer chance de saída!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} cola o peito e grampeia o rival contra a tela, somando tempo precioso de domínio.",
                 "{attacker} fixa o adversário na grade e pontua com curtas joelhadas na coxa."
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} mantém o contato de grade pontuando com ombradas curtas.",
                 "{attacker} empurra o rival contra a cerca, mas a disputa de pegadas permanece equilibrada."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o apoio na grade e o adversário se esquiva para o centro do octógono.",
                 "{attacker} força a aproximação na grade sem esgrima e acaba sendo colocado de costas para a cerca."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

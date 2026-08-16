@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} impõe uma guarda fechada asfixiante, dominando a gola e a manga sem dar chances de esgrima para o oponente!",
                 "{attacker} trava os quadris do adversário em uma guarda impenetrável, quebrando completamente seu centro de gravidade!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} atrai o adversário para a guarda aberta e estabelece o controle seguro de pernas.",
                 "{attacker} reergue os escudos de joelho e reconstrói uma retenção de guarda sólida."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} consegue travar o tronco do adversário na guarda aberta.",
                 "{attacker} ganha a meia-guarda profunda e amarra a progressão por cima."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o controle de pernas e cede a posição por cima.",
                 "{attacker} fura a retenção de pernas e deixa o rival estourar a pegada, cedendo a passagem."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

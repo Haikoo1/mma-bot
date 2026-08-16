@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} solta um Jab duplo rápido como um raio! O primeiro abre a guarda e o segundo conecta em cheio no nariz!",
                 "{attacker} projeta todo o peso do corpo num Jab esticado de esquerda! A cabeça do oponente chicoteia para trás!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um Jab limpo na boca do estômago antes de dar um passo para fora.",
                 "{attacker} lança a mão da frente estalando a luva bem na ponta do nariz do oponente!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} toca o rosto do adversário com um Jab leve apenas para medir o raio de ação.",
                 "{attacker} solta o golpe, mas o oponente consegue amortecer parcialmente colocando a luva na frente."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} erra o tempo do golpe e soca o ar enquanto o adversário dá um passo atrás.",
                 "{attacker} solta a mão, mas o oponente fecha a guarda alta e bloqueia o golpe com facilidade."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

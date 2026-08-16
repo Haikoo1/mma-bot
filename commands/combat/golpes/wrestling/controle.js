@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} amassa o oponente por cima com o peso do corpo, anulando qualquer tentativa de levantada!",
                 "{attacker} estabiliza a posição de forma perfeita, mantendo o oponente pregado no tatame sob pressão implacável!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} pesa por cima, controla a cabeça e os braços do oponente, mantendo a liderança do chão.",
                 "{attacker} assegura a posição dominante no solo com boa distribuição de peso."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} consegue reter o oponente no chão após ele tentar se levantar.",
                 "{attacker} mantém o controle básico por cima, amassando a guarda sem arriscar muito."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} vacila no peso do quadril e permite ao adversário fazer a ponte e escapar da posição.",
                 "{attacker} tenta segurar no chão, mas o oponente esgrima o braço e reverte o controle."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} dispara uma bomba de direita de encontro, explodindo a guarda e fazendo o oponente balançar!",
                 "{attacker} encaixa um Direto cirúrgico bem no centro do rosto, jogando o adversário contra as grades!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um Direto limpo no peito do oponente, tirando a base do rival!",
                 "{attacker} explode um Direto no osso da bochecha do oponente com excelente velocidade!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} toca o rosto do adversário com o Direto, somando pontos limpos.",
                 "{attacker} dispara o Direto raspando no queixo do oponente sem o peso total do corpo."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} solta a mão direita, mas esbarra no bloqueio duplo do adversário.",
                 "{attacker} projeta o Direto com tanta força que perde levemente o equilíbrio após passar no vazio!"
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

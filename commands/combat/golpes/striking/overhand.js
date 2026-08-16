@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} dobra a base e acerta uma bomba em arco de direita! O adversário desaba desacordado!",
                 "{attacker} projeta todo o peso do corpo num Overhand letal que explode no queixo do rival!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} contorna a guarda com uma pedrada de mão direita, marcando forte o rosto do oponente!",
                 "{attacker} acerta o Overhand na orelha do adversário, fazendo-o perder momentaneamente o teto!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} acha o tempo correto e acerta o golpe no queixo, somando pontos limpos.",
                 "{attacker} lança o Overhand caindo por cima do braço do oponente com impacto moderado."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} projeta o corpo para o golpe, mas o adversário bloqueia completamente a trajetória.",
                 "{attacker} soca no vazio com tanta carga que quase perde o equilíbrio no octógono."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

@@ -15,7 +15,6 @@ module.exports = {
                 "{attacker} antecipa o ataque do adversário, fecha os braços em carapaça e rebate a investida sem hesitar!",
                 "{attacker} lê o movimento ofensivo, bloqueia o impacto no centro da base e mantém o controle total da distância!"
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -27,7 +26,6 @@ module.exports = {
                 "{attacker} amortece a pressão nas luvas, mantendo a postura defensiva intacta.",
                 "{attacker} ergue o escudo de braço e bloqueia com firmeza a investida adversária."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -38,7 +36,6 @@ module.exports = {
                 "{attacker} esquiva atrasado, evitando o golpe direto mas mantendo-se acuado.",
                 "{attacker} absorve parte do ataque na guarda, mas perde o equilíbrio momentaneamente."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -49,7 +46,6 @@ module.exports = {
                 "{attacker} hesita no movimento de esquiva e fica vulnerável.",
                 "{attacker} ergue os braços fora do tempo e deixa a linha de ataque desprotegida."
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         }
     },
 

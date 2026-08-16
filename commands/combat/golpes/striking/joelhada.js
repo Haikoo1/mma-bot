@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} se lança para a frente e acerta um joelho voador devastador no nariz do oponente!",
                 "{attacker} projeta o joelho no plexo do adversário enquanto ele entrava no double leg! Queda instantânea!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} domina a nuca do oponente e aplica joelhadas fortes na linha de cintura!",
                 "{attacker} lança a joelhada no queixo do rival, fazendo a cabeça dele chicotear para trás!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} acerta a joelhada de leve na guarda alta do adversário.",
                 "{attacker} sobe o joelho, mas atinge apenas o braço de proteção do oponente."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} sobe o joelho sem força e toma um contra-golpe em seguida.",
                 "{attacker} erra a joelhada e o oponente aproveita para cinturar pelas costas."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

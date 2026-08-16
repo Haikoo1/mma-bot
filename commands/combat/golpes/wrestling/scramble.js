@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} mostra um agilidade impressionante no emaranhado do chão, dando a volta nas costas do adversário!",
                 "{attacker} domina a troca de posições em velocidade total e sepulta o rival sob seu peso no solo!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} vence o scramble no giro e garante o topo na transição de chão.",
                 "{attacker} sobressai-se no ritmo intenso do chão e ganha a posição de vantagem."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} força a transição, mas o adversário acompanha a movimentação no mesmo ritmo.",
                 "{attacker} tenta acelerar a disputa no chão, porém o confronto se nivela e ambos reajustam a base."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o apoio durante o giro e cede o controle de posição para o oponente.",
                 "{attacker} afoba-se nas transições do chão e acaba cedendo as costas para o adversário."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

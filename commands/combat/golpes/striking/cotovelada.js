@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} rasga o rosto do oponente com uma cotovelada descendente brutal, criando um corte profundo!",
                 "{attacker} acerta um cotovelo seco no queixo do rival, provocando uma queda fulminante!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um cotovelo curto e afiado na bochecha do oponente, atordoando-o!",
                 "{attacker} entra na distância curta e golpeia com a ponta do cotovelo no rosto do rival!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} raspa o cotovelo no rosto do adversário sem pegar cheio.",
                 "{attacker} lança a cotovelada na distância curta, tocando de leve a testa do rival."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} rasga o ar com o cotovelo e perde a postura temporariamente.",
                 "{attacker} tenta a cotovelada rodada, mas passa completamente no vazio e fica exposto."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} monta, ganha o ângulo e despeja uma chuva de golpes pesados até o adversário apagar!",
                 "{attacker} grampeia o oponente no solo e descarrega marretadas no queixo sem dar espaço para reação!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} ganha a meia-guarda e martela a cabeça do adversário com sequências de socos limpos.",
                 "{attacker} faz postura na guarda e dispara cruzados fortes caindo diretamente na face do rival!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} mantém a pressão no solo pontuando com golpes curtos de quadril.",
                 "{attacker} tenta posturar para bater, mas o adversário amarra o combate travando sua nuca."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} fica sem ângulo no chão e ataca no vazio.",
                 "{attacker} tenta o soco pesado por cima, mas o adversário desvia a cabeça e ganha o esgrima."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

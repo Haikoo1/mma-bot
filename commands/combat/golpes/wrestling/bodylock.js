@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} enlaça a cintura do rival com pegada de urso, suspende o adversário e descarrega um arremesso brutal contra o solo!",
                 "{attacker} encaixa a pegada de cintura com precisão cirúrgica, projeta o oponente para o alto e o enterra de costas!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} fecha a trava de corpo firme, dobra os joelhos do oponente e completa o takedown sem sobressaltos.",
                 "{attacker} ajusta as mãos atrás das costas do rival e força a queda com controle total de tronco."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} desequilibra o oponente com o Bodylock e prensa o combate na grade.",
                 "{attacker} tenta arrastar o rival pela cintura, mas o adversário defende parcialmente a base."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} tenta a trava de corpo, fica sem base e toma uma esgrima de resposta.",
                 "{attacker} projeta-se para fechar o Bodylock, mas o oponente se esquiva e frustra a aproximação."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} acerta um chute alto perfeito na têmpora, desconectando o oponente no ar!",
                 "{attacker} projeta a perna com rotação total e encaixa a canela no queixo do adversário!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} estoura a guarda alta com um Highkick forte que faz o oponente cambalear!",
                 "{attacker} chuta alto e atinge a orelha do adversário com bastante explosão!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} chuta alto tocando a guarda do adversário com violência.",
                 "{attacker} acerta a perna de raspão na cabeça do oponente sem o peso completo do corpo."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o equilíbrio após o Highkick errar o alvo e recua rapidamente.",
                 "{attacker} lança a perna, mas o adversário dá um passo atrás e o golpe acerta o vazio."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

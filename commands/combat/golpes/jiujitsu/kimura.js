@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} torce a alavanca de ombro em um ângulo torcional perfeito, arrancando o tapout fulminante do rival!",
                 "{attacker} encaixa a trava de figura quatro firme e força a articulação do ombro até o limite do desistimento!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} traz o braço preso nas costas do oponente, impondo perigo severo à articulação.",
                 "{attacker} eleva a pegada no pulso e força o ombro do adversário com firmeza."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} usa a Kimura para controlar a postura do oponente no chão.",
                 "{attacker} busca a rotação do pulso, porém o oponente trava o braço junto ao próprio corpo."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde a pegada do pulso e fica em posição desfavorável.",
                 "{attacker} força a torção do ombro sem apoio suficiente e acaba invertido no chão."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

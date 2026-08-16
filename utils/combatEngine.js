@@ -41,7 +41,6 @@ function buildAttackEmbed(data) {
 
     const rawNarrative = outcomeData.texts[Math.floor(Math.random() * outcomeData.texts.length)];
     const narrative = rawNarrative.replace(/{attacker}/g, `<@${attacker.id}>`);
-    const gifUrl = outcomeData.gifs[Math.floor(Math.random() * outcomeData.gifs.length)];
 
     let levelDisplay = `\`Nível ${level}/5\``;
     if (effectiveLevel < level) {
@@ -62,7 +61,6 @@ function buildAttackEmbed(data) {
             { name: '🥊 Lutador', value: `<@${attacker.id}>`, inline: true },
             { name: '📊 Nível Executado', value: levelDisplay, inline: true }
         )
-        .setImage(gifUrl)
         .setFooter({ text: 'MMA RP • Sistema Narrativo Oficial' })
         .setTimestamp();
 

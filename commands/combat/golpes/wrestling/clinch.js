@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} cola o peito no oponente, ganha a esgrima dupla e o esmaga contra a grade com controle absoluto!",
                 "{attacker} anula o espaço do adversário, grampeando o tronco com pegadas firmes e pressão sufocante!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} encurta a distância e estabelece um clinch firme contra a grade.",
                 "{attacker} domina um dos braços e prensa o oponente, impondo o jogo de grade!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} segura o oponente na grade por alguns segundos antes da disputa de pegadas equilibrar.",
                 "{attacker} tenta travar a luta colada, mas o adversário responde com boa esgrima."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} avança desajeitado para o clinch e toma um contra-golpe que quebra a aproximação.",
                 "{attacker} tenta a aproximação para a luta colada, mas o oponente esquiva e sai da linha de ataque."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

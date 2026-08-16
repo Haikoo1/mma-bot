@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} exploda um Cruzado em arco perfeito, atingindo o queixo em cheio e desmontando o oponente!",
                 "{attacker} conecta um Cruzado devastador de encontro que faz o adversário cair virando os olhos!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} acerta um Cruzado limpo na orelha do rival, fazendo-o balançar levemente.",
                 "{attacker} solta a mão lateral firme e atinge em cheio a lateral da cabeça do oponente!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} lança o Cruzado, rasgando o ar e tocando levemente a orelha do oponente.",
                 "{attacker} dispara o golpe curvo, mas o adversário amortece grande parte do impacto na guarda."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} tenta o golpe, mas fica no vácuo e exposto ao contragolpe.",
                 "{attacker} gira o golpe lateral, mas o oponente pendula por baixo com maestria."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

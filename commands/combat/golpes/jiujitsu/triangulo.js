@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} ganchos de perna perfeitos no pescoço, puxa a cabeça para baixo e força uma desistência fulminante!",
                 "{attacker} encaixa a chave de triângulo com pressão cirúrgica nas carótidas, deixando o rival completamente sem reação!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} domina a cabeça do adversário na guarda e trava o triângulo de forma sufocante.",
                 "{attacker} atravessa o braço do rival e aperta a trava de pernas com muita força."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} ataca no Triângulo e mantém o adversário preso sob controle por baixo.",
                 "{attacker} tenta fechar o triângulo, contudo o rival consegue defender parcialmente o alinhamento das pernas."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} não consegue fechar a trava de pernas e fica em posição desvantajosa por baixo.",
                 "{attacker} projeta as pernas, mas escorrega no ajuste e acaba cedendo a passagem de guarda."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

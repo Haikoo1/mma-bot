@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} aplica um Lowkick brutal no nervo fibular! A perna do adversário adormece e dobra!",
                 "{attacker} vira o quadril com violência e estoura a coxa do oponente, que urra com a dor do impacto!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um Lowkick firme na panturrilha, desequilibrando o rival momentaneamente.",
                 "{attacker} acerta a canela na parte interna da coxa do adversário com ótima velocidade!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} toca a coxa do adversário sem pegar com o osso da canela cheio.",
                 "{attacker} acerta a ponta do pé na perna do adversário com baixo impacto."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} erra a distância do chute e o adversário recolhe a perna a tempo.",
                 "{attacker} tenta o Lowkick, mas o oponente esquiva o passo para trás e o chute corta apenas o ar."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

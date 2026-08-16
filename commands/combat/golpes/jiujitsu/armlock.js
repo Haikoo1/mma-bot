@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} isola o braço, coloca o calcanhar na nuca e estica a alavanca de cotovelo até a desistência imediata!",
                 "{attacker} aplica uma chave de braço veloz e devastadora, deixando o oponente sem opção além do batimento!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} eleva o quadril com pressão na articulação do cotovelo, deixando o rival em apuros.",
                 "{attacker} estica o braço do oponente com perigo extremo, gerando enorme tensão na articulação."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} ajusta a Posição de Armlock somando tempo de domínio no chão.",
                 "{attacker} roda o quadril para o Armlock, porém o rival consegue fazer a amarração de mãos a tempo."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o controle do quadril e o adversário escapa da posição sem danos.",
                 "{attacker} projeta a perna por cima da cabeça de forma desatenta e cede a passagem para o rival."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

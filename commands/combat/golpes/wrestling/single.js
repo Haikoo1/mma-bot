@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} mergulha perfeito na perna única, faz a corrida de quadril e projeta o rival com força contra o chão!",
                 "{attacker} recolhe a perna do oponente no ar, gira a base e aplica uma varredura impecável!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} ataca o tornozelo de forma eficiente, tirando o equilíbrio e completando o takedown.",
                 "{attacker} abraça a coxa do adversário e raspa o pé de apoio com precisão!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} consegue desequilibrar o oponente com o Single Leg, gerando uma disputa truncada.",
                 "{attacker} segura a perna isolada, mas o oponente segura na grade e trava a queda."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} tenta a catada de perna de longe e sofre um Sprawl pesado no pescoço.",
                 "{attacker} erra o tempo da entrada de perna única e toma um contragolpe por cima."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

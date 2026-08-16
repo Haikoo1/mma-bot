@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} rasga a linha central e acerta um Uppercut seco na ponta do queixo! Queda imediata!",
                 "{attacker} encaixa um Uppercut violentíssimo de encontro no momento em que o oponente abaixava o nível!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um Uppercut rápido no queixo do oponente, fazendo a cabeça dele chicotear!",
                 "{attacker} entra na distância curta e dispara um Uppercut forte que estala na boca do adversário."
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} acerta um Uppercut leve na guarda baixa do oponente.",
                 "{attacker} lança o golpe ascendente, mas pega apenas de raspão na bochecha."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} rasga o ar com o soco ascendente sem atingir o alvo.",
                 "{attacker} tenta furar a guarda por baixo, mas o adversário fecha os cotovelos e bloqueia totalmente."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

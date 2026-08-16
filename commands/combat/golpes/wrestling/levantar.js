@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} dá um estouro de quadril poderoso, estica os braços e fica de pé limpando qualquer pegada do rival!",
                 "{attacker} usa a explosão muscular para escapar do chão num piscar de olhos e recupera o centro do octógono!"
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} trabalha bem a base de quatro apoios e se levanta se desvencilhando do oponente.",
                 "{attacker} força a subida com a ajuda do braço de apoio e rompe a pegada do adversário!"
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} consegue ficar de pé, porém continua prensado de costas na grade.",
                 "{attacker} se levanta com bastante desgaste, ainda preso nas garras do oponente."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} abre brecha ao tentar subir e continua sob domínio por baixo.",
                 "{attacker} força a subida sem postura e é amassado de volta contra o chão."
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         }
     },
 

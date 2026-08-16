@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} disfarça o olhar e dispara um pisão frontal que explode no queixo do rival!",
                 "{attacker} acerta um Frontkick perfeito no rosto do oponente, apagando as luzes no ato!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} lança um Frontkick rápido no peito do rival, freando sua investida.",
                 "{attacker} acerta a sola do pé na boca do estômago do adversário com ótima pressão!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} lança o chute frontal raspando no peito do oponente.",
                 "{attacker} acerta um Frontkick leve no tronco, mantendo o controle da área."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} erra o tempo do pisão e fica em posição desfavorável.",
                 "{attacker} chuta no vazio enquanto o adversário dá um passo lateral com facilidade."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

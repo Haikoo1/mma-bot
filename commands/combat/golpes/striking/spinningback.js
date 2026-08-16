@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} encaixa um calcanhar rodado brutal na cabeça do rival, fazendo-o tombar desacordado!",
                 "{attacker} solta o cotovelo rodado de surpresa, atingindo o queixo do oponente com rotação total!"
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} conecta um soco rodado no osso da bochecha do rival, fazendo-o recuar assustado!",
                 "{attacker} acerta a sola do pé no abdômen com um Spinning Back Kick firme!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} lança o golpe rodado, mas perde um pouco de força no momento do impacto.",
                 "{attacker} toca o tronco do oponente com o golpe rodado sem pegar cheio."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} gira em falso e perde o equilíbrio no solo.",
                 "{attacker} telegrafa a giratória e o adversário se esquiva dando um passo simples para trás."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

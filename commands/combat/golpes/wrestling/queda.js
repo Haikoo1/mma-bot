@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} aplica um suplex/slam brutal, erguendo o rival do solo e enterrando-o com impacto total!",
                 "{attacker} pega a cintura do oponente, levanta-o no ar e o projeta no chão de forma espetacular!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} executa um takedown preciso, tirando a base do rival e estabelecendo o chão.",
                 "{attacker} aproveita o momento de trocação para mergulhar nos pés do adversário e levá-lo ao solo!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} força a entrada de queda e consegue derrubar de forma arrastada.",
                 "{attacker} desestabiliza o adversário e garante a queda sem grande impacto."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o tempo de entrada e acaba grampeado na grade sem derrubar.",
                 "{attacker} mergulha com pouca explosão e o adversário se afasta com facilidade."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

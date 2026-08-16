@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} transita como uma sombra para as costas do oponente, travando a cintura e abrindo o caminho das finalizações!",
                 "{attacker} escala o tronco do rival, tranca os ganchos nas virilhas e domina as costas de forma implacável!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} engata a pegada de cinto de segurança (Seatbelt) e trava o tronco por trás.",
                 "{attacker} consolida o domínio de costas mantendo o oponente sob constante ameaça."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} mantém o cinto de segurança no tronco com o oponente de lado.",
                 "{attacker} alcança o dorso do oponente, mas não consegue fixar os dois ganchos firmemente."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde a posição e fica preso por baixo.",
                 "{attacker} projeta-se para a tomada de costas, mas o rival gira o quadril a tempo e frustra o domínio."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

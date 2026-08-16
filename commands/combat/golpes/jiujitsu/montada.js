@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} avança os joelhos até as axilas do adversário, fixando uma montada esmagadora e sufocante!",
                 "{attacker} estabelece o controle total montado, colando o peito e anulando todas as tentativas de defesa do rival!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} crava a base sobre o quadril do rival e assume o controle superior no chão.",
                 "{attacker} distribui bem o peso sobre o abdômen do adversário e consolida a montada."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} consegue montar temporariamente antes de sofrer a ponte.",
                 "{attacker} projeta o corpo por cima, mas o rival consegue prender a ponta de seu pé."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} perde o equilíbrio ao subir e cede a posição por baixo.",
                 "{attacker} tenta adiantar a perna, mas o adversário antecipa a transição e empurra o joelho."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} abaixa o nível rapidamente, abraça as duas pernas e enterra o rival no tatame com uma queda avassaladora!",
                 "{attacker} aciona os motores numa baiana perfeita, erguendo o oponente e aplicando um slam cinematográfico!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} entra em velocidade na baiana e derruba o oponente de forma limpa no centro do octógono.",
                 "{attacker} grampeia as duas pernas do adversário e completa a queda caindo por cima com autoridade!"
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} arrasta o oponente para o chão após uma briga forte de esgrima.",
                 "{attacker} tenta o double leg e consegue derrubar, mas o adversário amortece a queda e puxa para a guarda."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} ataca as pernas no vazio e fica em posição vulnerável por baixo.",
                 "{attacker} se afoba no mergulho e esbarra na defesa de braços firme do adversário."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

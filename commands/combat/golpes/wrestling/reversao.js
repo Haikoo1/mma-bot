@@ -16,7 +16,6 @@ module.exports = {
                 "{attacker} encaixa a ponte perfeita, gira por cima do tronco do adversário e cai em posição dominante de controle!",
                 "{attacker} usa a alavanca dos braços no momento exato e reverte o jogo completamente no chão!"
             ],
-            gifs: ["https://media.giphy.com/media/3o7TKrEzvLbsVAud8I/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -28,7 +27,6 @@ module.exports = {
                 "{attacker} faz a alavanca de quadril e consegue raspar/inverter, assumindo a posição superior.",
                 "{attacker} aproveita o desequilíbrio do rival para rolar por cima e tomar o controle da luta."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -39,7 +37,6 @@ module.exports = {
                 "{attacker} desestabiliza o peso do adversário e melhora sua posição defensiva.",
                 "{attacker} tenta inverter e ganha algum espaço no solo, neutralizando o ataque do rival."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -50,7 +47,6 @@ module.exports = {
                 "{attacker} gasta energia tentando a reversão e continua preso por baixo.",
                 "{attacker} tenta capotar o adversário, mas se expõe e fica em posição ainda mais desconfortável."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         }
     },
 

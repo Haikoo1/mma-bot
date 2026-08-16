@@ -15,7 +15,6 @@ module.exports = {
                 "{attacker} antecipa o mergulho, joga o quadril pesado por cima e ataca o pescoço do rival!",
                 "{attacker} anula o takedown perfeitamente, faz o oponente bater no chão e ganha a posição de domínio!"
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR2: {
             emoji: '🌟',
@@ -27,7 +26,6 @@ module.exports = {
                 "{attacker} reage a tempo com um sprawl limpo, mantendo a luta em pé.",
                 "{attacker} bloqueia as pegadas nas pernas e empurra a cabeça do oponente para quebrar a entrada."
             ],
-            gifs: ["https://media.giphy.com/media/26bgQ8O2K8Tsm0JDW/giphy.gif"]
         },
         STAR: {
             emoji: '⭐',
@@ -38,7 +36,6 @@ module.exports = {
                 "{attacker} consegue se manter de pé a custo de bastante esforço físico.",
                 "{attacker} equilibra na perna de apoio e defende a queda na raça após alguns segundos de incerteza."
             ],
-            gifs: ["https://media.giphy.com/media/xT1XGzg8xM0pM8v3I4/giphy.gif"]
         },
         MISS: {
             emoji: '❌',
@@ -49,7 +46,6 @@ module.exports = {
                 "{attacker} perde a base e é derrubado facilmente pelo oponente.",
                 "{attacker} hesita no tempo de reação e é levado ao chão sem conseguir espalhar o peso."
             ],
-            gifs: ["https://media.giphy.com/media/l3mZr3M8g82aB0x6E/giphy.gif"]
         }
     },
 
