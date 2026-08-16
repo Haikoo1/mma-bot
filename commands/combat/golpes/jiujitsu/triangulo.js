@@ -66,7 +66,7 @@ module.exports = {
             }
         }
 
-        const tier = processRoll(effectiveLevel);
+        const tier = processRoll(effectiveLevel, attacker.id);
         const outcomeData = this.outcomes[tier];
 
         const hitResult = FightManager.registerHit(message.channel, attacker, 'Triângulo', level, null, false, 'BJJ', this.staminaCost);

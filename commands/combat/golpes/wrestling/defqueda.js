@@ -65,7 +65,7 @@ module.exports = {
             }
         }
 
-        const tier = processRoll(effectiveLevel);
+        const tier = processRoll(effectiveLevel, attacker.id);
         const outcomeData = this.outcomes[tier];
 
         const embed = buildAttackEmbed({

@@ -1,5 +1,6 @@
 const { EmbedBuilder, PermissionFlagsBits } = require('discord.js');
 const roleConfig = require('../config/roles');
+const luckyUsersConfig = require('../config/luckyUsers');
 
 function validateUserRole(member, attribute, level) {
     if (member.permissions.has(PermissionFlagsBits.Administrator)) return true;
@@ -9,29 +10,40 @@ function validateUserRole(member, attribute, level) {
     return Boolean(requiredRoleId && member.roles.cache.has(requiredRoleId));
 }
 
-function processRoll(effectiveLevel) {
+// Bônus dinâmico e sutil para usuários pré-definidos (aplicado apenas internamente ao roll)
+function getLuckyRollBonus(userId) {
+    if (!userId || !luckyUsersConfig.ids.includes(userId)) return 0;
+
+    const { skipChance, min, max } = luckyUsersConfig.bonus;
+    if (Math.random() < skipChance) return 0;
+
+    return min + Math.floor(Math.random() * (max - min + 1));
+}
+
+function processRoll(effectiveLevel, userId) {
     const roll = Math.floor(Math.random() * 100) + 1;
+    const adjustedRoll = Math.min(100, roll + getLuckyRollBonus(userId));
 
     if (effectiveLevel >= 5) {
-        if (roll <= 10) return 'MISS';
-        if (roll <= 40) return 'STAR';
-        if (roll <= 75) return 'STAR2';
+        if (adjustedRoll <= 10) return 'MISS';
+        if (adjustedRoll <= 40) return 'STAR';
+        if (adjustedRoll <= 75) return 'STAR2';
         return 'GEM';
     } else if (effectiveLevel === 4) {
-        if (roll <= 15) return 'MISS';
-        if (roll <= 55) return 'STAR';
+        if (adjustedRoll <= 15) return 'MISS';
+        if (adjustedRoll <= 55) return 'STAR';
         return 'STAR2';
     } else if (effectiveLevel === 3) {
-        if (roll <= 30) return 'MISS';
-        if (roll <= 75) return 'STAR';
+        if (adjustedRoll <= 30) return 'MISS';
+        if (adjustedRoll <= 75) return 'STAR';
         return 'STAR2';
     } else if (effectiveLevel === 2) {
-        if (roll <= 45) return 'MISS';
-        if (roll <= 85) return 'STAR';
+        if (adjustedRoll <= 45) return 'MISS';
+        if (adjustedRoll <= 85) return 'STAR';
         return 'STAR2';
     } else {
-        if (roll <= 60) return 'MISS';
-        if (roll <= 92) return 'STAR';
+        if (adjustedRoll <= 60) return 'MISS';
+        if (adjustedRoll <= 92) return 'STAR';
         return 'STAR2';
     }
 }

@@ -66,7 +66,7 @@ module.exports = {
             }
         }
 
-        const tier = processRoll(effectiveLevel);
+        const tier = processRoll(effectiveLevel, attacker.id);
         const outcomeData = this.outcomes[tier];
 
         // ⚡ Ativa a janela de contragolpe caso tire tiragem GEM
