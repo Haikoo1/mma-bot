@@ -75,28 +75,13 @@ module.exports = {
                 return message.reply({ embeds: [embed] });
             }
 
-            // -testluta finalizar <KO|TKO|SUBMISSION> (Testa a tela de vitória)
-            case 'finalizar': {
-                const type = args[1]?.toUpperCase() || 'KO';
-                const finishData = {
-                    type,
-                    winner: fight.fighters[0].mention,
-                    loser: fight.fighters[1].mention,
-                    reason: 'Teste de finalização via comando de Admin'
-                };
-
-                FightManager.executeFinish(message.channel, fight, finishData);
-                return;
-            }
-
             default: {
                 return message.reply([
                     '🛠️ **COMANDOS DE TESTE DE LUTA (ADMIN):**',
                     '• `-testluta fimround` - Encerra o round atual instantaneamente.',
                     '• `-testluta decisao` - Exibe a simulação da súmula e decisão dos juízes.',
                     '• `-testluta dano <1 ou 2> <pts>` - Aplica dano direto em um lutador.',
-                    '• `-testluta contragolpe <1 ou 2>` - Ativa o status de contragolpe.',
-                    '• `-testluta finalizar <KO|TKO|SUBMISSION>` - Testa a tela de nocaute/vitória.'
+                    '• `-testluta contragolpe <1 ou 2>` - Ativa o status de contragolpe.'
                 ].join('\n'));
             }
         }

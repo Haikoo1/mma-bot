@@ -48,7 +48,6 @@ Todos os golpes com nível (1 a 5) exigem o cargo da disciplina equivalente (ex.
 | `-luta iniciar @L1 @L2` | Propõe o confronto; ambos os lutadores confirmam com ✅ (expira em 3 min). |
 | `-luta teste` | Staff/Admin: cria luta de teste (aceita NPC) sem validação. |
 | `-luta decisao` | Staff/Admin: apura a decisão dos juízes e encerra a luta. |
-| `-luta nocaute @Lutador` | Staff/Admin: declara KO manualmente e encerra a luta. |
 | `-luta encerrar` | Encerra a luta e todos os timers do canal. |
 | `-round` | Inicia o próximo round (padrão 5 min). |
 | `-decisao` | Encerra no limite de tempo e chama os 3 juízes: cartões, pontuação round a round e vencedor. |
@@ -71,7 +70,7 @@ Todos os golpes com nível (1 a 5) exigem o cargo da disciplina equivalente (ex.
 |---|---|
 | `-help` | Guia completo de comandos e golpes em um embed. |
 | `-status` | Painel tático da luta ativa: stamina, dano, contragolpe e pontuação. |
-| `-testluta` | Admin: ferramentas de teste (fim de round, dano direto, contragolpe, decisão simulada, tela de finalização). |
+| `-testluta` | Admin: ferramentas de teste (fim de round, dano direto, contragolpe, decisão simulada). |
 | `-post` | Publica uma atualização na rede social do RP (MMA-X) — opcional, ver seção abaixo. |
 
 ## Golpes (níveis 1 a 5)
@@ -89,11 +88,11 @@ Todos os golpes com nível (1 a 5) exigem o cargo da disciplina equivalente (ex.
 | `-cotovelada` | Cotovelada; alto risco de corte. |
 | `-joelhada` | Joelhada no clinch ou voadora. |
 | `-frontkick` | Teep frontal; quebra a base e controla distância. |
-| `-highkick` | Chute na cabeça; chance de KO imediato. |
+| `-highkick` | Chute na cabeça; alto dano. |
 | `-midkick` | Chute na linha de cintura/costelas. |
 | `-lowkick` | Chute baixo; castiga a base e a movimentação. |
-| `-spinningback` | Golpe rodado; KO espetacular. |
-| `-gandp` | Ground and Pound no solo; chance de TKO. |
+| `-spinningback` | Golpe rodado; alto dano. |
+| `-gandp` | Ground and Pound no solo; castiga o adversário caído. |
 
 ### Wrestling / Quedas
 
@@ -115,7 +114,7 @@ Todos os golpes com nível (1 a 5) exigem o cargo da disciplina equivalente (ex.
 
 | Comando | Técnica |
 |---|---|
-| `-armlock` | Chave de braço (armbar); finaliza por tapout. |
+| `-armlock` | Chave de braço (armbar). |
 | `-guilhotina` | Estrangulamento frontal com o braço. |
 | `-kimura` | Chave de ombro com pegada figura-4. |
 | `-mataleao` | Estrangulamento pelas costas. |
@@ -132,8 +131,8 @@ Todos os golpes com nível (1 a 5) exigem o cargo da disciplina equivalente (ex.
 
 | Comando | Função |
 |---|---|
-| `-def1..5` | Postura defensiva; GEM ativa contragolpe (+1 nível efetivo no próximo ataque). |
-| `-esquiva1..5` | Esquiva e movimento de cabeça; GEM também ativa contragolpe. |
+| `-def1..5` | Postura defensiva; registra o nível de defesa usado no cálculo Atk x Def e GEM ativa contragolpe (+1 nível efetivo no próximo ataque). |
+| `-esquiva1..5` | Esquiva e movimento de cabeça; registra o nível de defesa usado no cálculo Atk x Def e GEM também ativa contragolpe. |
 | `-finta` | RP: finta narrativa aleatória (sem roll). |
 | `-recuperar` | 1x por round: -2 de dano, cura 1 corte e +20% de stamina. |
 
@@ -156,7 +155,8 @@ Durante os intervalos da luta, dois botões aparecem nos embeds:
 ## Mecânicas
 
 - **Contragolpe:** um GEM em `-def` ou `-esquiva` abre a janela de contragolpe, dando +1 nível efetivo no próximo ataque. O estado aparece no `-status`.
-- **Registro de impacto:** golpes ofensivos passam por `registerHit`, que resolve dano, corte, pontos do round, finalizações e faltas (golpes ilegais).
+- **Registro de impacto:** golpes ofensivos passam por `registerHit`, que resolve o confronto Atk x Def contra a defesa declarada pelo oponente (ou automática), aplicando dano, cortes, pontos do round e faltas (golpes ilegais). O relatório da troca é exibido **uma única vez por round**, no fim do round.
+- **Encerramento:** as lutas terminam somente por **Decisão dos Juízes** (`-decisao`); rounds são pontuados em 10-9, 10-8 ou 10-7, sem empates.
 - **Rounds:** cada round dura 5 minutos; ao terminar, entra em intervalo com opção de recuperação.
 - **Persistência:** vitalidade e peso são salvos em arquivos JSON (`data/vitality.json`, `data/weight.json`).
 

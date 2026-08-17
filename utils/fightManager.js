@@ -17,6 +17,7 @@ function createFighterState(user, penalty) {
         hasWeightPenalty: penalty,
         recuperarUsedThisRound: false,
         counterWindow: false,
+        defenseLevel: null,
         roundPoints: 0,
         totalPoints: 0
     };
@@ -45,7 +46,8 @@ class FightManager {
                 createFighterState(fighter1User, f1Penalty),
                 createFighterState(fighter2User, f2Penalty)
             ],
-            roundScores: []
+            roundScores: [],
+            roundReport: []
         };
         activeFights.set(channel.id, fight);
         return fight;
@@ -69,7 +71,8 @@ class FightManager {
                 createFighterState(fighter1User, f1Penalty),
                 createFighterState(fighter2User, f2Penalty)
             ],
-            roundScores: []
+            roundScores: [],
+            roundReport: []
         };
 
         fight.timerInterval = setInterval(() => {
@@ -101,7 +104,10 @@ class FightManager {
             f.roundDamage = 0;
             f.roundPoints = 0;
             f.recuperarUsedThisRound = false;
+            f.defenseLevel = null;
         });
+
+        fight.roundReport = [];
 
         fight.timerInterval = setInterval(() => {
             if (fight.status !== 'IN_ROUND') return;
@@ -139,10 +145,15 @@ class FightManager {
             wasCounter = true;
         }
 
-        // Cálculo dinâmico de defesa se não fornecido
+        // Cálculo dinâmico de defesa: usa a defesa declarada pelo oponente (se houver) ou gera uma automática
         if (defLevel === null) {
-            const staminaFactor = defenderObj.stamina > 50 ? 1 : 0;
-            defLevel = Math.min(5, Math.max(1, Math.floor(Math.random() * 3) + 1 + staminaFactor));
+            if (defenderObj.defenseLevel != null) {
+                defLevel = defenderObj.defenseLevel;
+                defenderObj.defenseLevel = null; // Consome a defesa declarada pelo oponente
+            } else {
+                const staminaFactor = defenderObj.stamina > 50 ? 1 : 0;
+                defLevel = Math.min(5, Math.max(1, Math.floor(Math.random() * 3) + 1 + staminaFactor));
+            }
         }
 
         // Gasto de Stamina proporcional (multiplicador específico de cada golpe)
@@ -158,13 +169,12 @@ class FightManager {
             return { fight, alertMessage: '🛑 Luta paralisada por golpe ilegal!', isFoul: true };
         }
 
-        // CÁLCULO REBALANCEADO (MAX DANO: 20 PTS)
+        // CÁLCULO REBALANCEADO (DANO POR TROCA)
         const netValue = effectiveAtkLevel - defLevel;
         let hitResult = "";
         let damageValue = 0;
         let pointsGained = 0;
         let alertMessage = null;
-        let pendingFinish = null;
 
         if (netValue <= -2) {
             hitResult = "🛡️ **DEFESA PERFEITA:** O oponente esquivou ou bloqueou totalmente o golpe sem sofrer impacto!";
@@ -180,7 +190,7 @@ class FightManager {
             defenderObj.streak = 0;
         } else if (netValue <= 2) {
             hitResult = "💥 **GOLPE LIMPO (STAR2):** O ataque furou a guarda e conectou com precisão no alvo!";
-            damageValue = 4; // 4 Pontos de dano (5 conexões seguidas = 20 Pts = KO)
+            damageValue = 4; // 4 Pontos de dano
             pointsGained = 6;
             defenderObj.streak += 1;
         } else {
@@ -208,25 +218,21 @@ class FightManager {
                 ? `${alertMessage}\n🩸 **SANGRAMENTO INTENSO:** ${defenderObj.mention} sofreu um corte profundo no rosto!`
                 : `🩸 **SANGRAMENTO INTENSO:** ${defenderObj.mention} sofreu um corte profundo no rosto!`;
         } else if (defenderObj.cuts >= 3) {
-            pendingFinish = { type: 'TKO_MEDICAL', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Interrupção médica por corte severo' };
+            alertMessage = alertMessage 
+                ? `${alertMessage}\n🩸 **CORTE GRAVÍSSIMO:** ${defenderObj.mention} sangra muito e a equipe médica está em alerta!`
+                : `🩸 **CORTE GRAVÍSSIMO:** ${defenderObj.mention} sangra muito e a equipe médica está em alerta!`;
         }
 
-        if (defenderObj.damage >= 12 && !pendingFinish) {
+        if (defenderObj.damage >= 12) {
             alertMessage = alertMessage 
                 ? `${alertMessage}\n⚠️ **PERIGO:** ${defenderObj.mention} está grogue e perto do nocaute!`
                 : `⚠️ **ALERTA DE CRÍTICO:** ${defenderObj.mention} absorveu pancadas pesadas!`;
         }
 
-        // Condições de Encerramento (Teto de 20 Pontos de Dano)
-        if (!pendingFinish && defenderObj.damage >= 20) {
-            if (moveType === 'Grappling' || moveType === 'BJJ') {
-                pendingFinish = { type: 'SUBMISSION', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Bateu em desistência (Tapout)' };
-            } else if (netValue >= 3) {
-                pendingFinish = { type: 'KO', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Nocaute brutal e imediato' };
-            } else {
-                pendingFinish = { type: 'TKO', loser: defenderObj.mention, winner: attackerObj.mention, reason: 'Interrupção do árbitro por falta de defesa' };
-            }
-        }
+        // Registra a troca no relatório do round (exibido uma única vez ao fim do round)
+        fight.roundReport.push(
+            `${attackerObj.mention} **${moveName}** (Atk \`${effectiveAtkLevel}\` x Def \`${defLevel}\`) → ${damageValue === 0 ? '🛡️ **Bloqueado**' : `💥 **+${damageValue} dmg**`}`
+        );
 
         return {
             fight,
@@ -239,76 +245,8 @@ class FightManager {
             hitResult,
             damageValue,
             alertMessage,
-            pendingFinish,
             wasCounter
         };
-    }
-
-    static sendHitResult(channel, result) {
-        const { attackerObj, defenderObj, moveName, atkLevel, defLevel, damageValue, hitResult, alertMessage, wasCounter } = result;
-
-        const embed = new EmbedBuilder()
-            .setTitle(`⚡ RELATÓRIO DE CONFRONTO • ${moveName.toUpperCase()}${wasCounter ? ' (⚡ CONTRAGOLPE)' : ''}`)
-            .setColor(damageValue >= 4 ? 0xe74c3c : damageValue >= 1 ? 0xe67e22 : 0x3498db)
-            .setDescription(`>>> ${hitResult}`)
-            .addFields(
-                { 
-                    name: '🎯 CONFRONTO DIRETO (Atk vs Def)', 
-                    value: `• **Ataque (${attackerObj.mention}):** Nível \`${atkLevel}\`\n• **Defesa (${defenderObj.mention}):** Nível \`${defLevel}\`\n• **Dano Infligido:** \`+${damageValue} pts\``,
-                    inline: false 
-                },
-                {
-                    name: `🥊 ${attackerObj.mention}`,
-                    value: `Gás: ${getStaminaBar(attackerObj.stamina)}\nDano: ${getDamageBar(attackerObj.damage)}`,
-                    inline: true
-                },
-                {
-                    name: `🛡️ ${defenderObj.mention}`,
-                    value: `Gás: ${getStaminaBar(defenderObj.stamina)}\nDano: ${getDamageBar(defenderObj.damage)}${defenderObj.cuts > 0 ? `\n(🩸 Cortes: ${defenderObj.cuts}/3)` : ''}`,
-                    inline: true
-                }
-            )
-            .setFooter({ text: 'Octagon Engine • MMA RP' })
-            .setTimestamp();
-
-        if (alertMessage) {
-            embed.addFields({ name: '📢 Nota do Octógono', value: alertMessage, inline: false });
-        }
-
-        return channel.send({ embeds: [embed] });
-    }
-
-    static executeFinish(channel, fight, finishData) {
-        if (fight.timerInterval) clearInterval(fight.timerInterval);
-        fight.status = 'FINISHED';
-
-        let title = "";
-        let color = 0x8e44ad;
-        let detailText = "";
-
-        if (finishData.type === 'KO') {
-            title = "💥 NOCAUTE (KO)!";
-            color = 0x9b59b6;
-            detailText = `**Modalidade:** Nocaute Direto\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
-        } else if (finishData.type === 'TKO' || finishData.type === 'TKO_MEDICAL') {
-            title = "🛑 NOCAUTE TÉCNICO (TKO)!";
-            color = 0xe74c3c;
-            detailText = `**Modalidade:** Interrupção do Árbitro / Médica\n**Motivo:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
-        } else if (finishData.type === 'SUBMISSION') {
-            title = "🥋 FINALIZAÇÃO (SUBMISSION)!";
-            color = 0x2ecc71;
-            detailText = `**Modalidade:** Luta no Chão / BJJ\n**Desfecho:** ${finishData.reason}\n**Vencedor:** ${finishData.winner}\n**Derrotado:** ${finishData.loser}`;
-        }
-
-        const embed = new EmbedBuilder()
-            .setTitle(title)
-            .setColor(color)
-            .setDescription(`>>> ${detailText}`)
-            .addFields({ name: '⏱️ Round de Encerramento', value: `Round ${fight.currentRound}` })
-            .setTimestamp();
-
-        channel.send({ embeds: [embed] });
-        activeFights.delete(channel.id);
     }
 
     static pauseForFoul(channel, fight, offenderMention, victimMention, foulType) {
@@ -342,29 +280,49 @@ class FightManager {
         let f1Score = 10;
         let f2Score = 10;
 
-        // Avaliação de Súmulas Baseada em Dano + Pontos Táticos
+        // Avaliação de Súmulas Baseada em Dano + Pontos Táticos (sempre 10-9, 10-8 ou 10-7; nunca empata)
         const f1Perf = f1.roundDamage * 2 + f1.roundPoints;
         const f2Perf = f2.roundDamage * 2 + f2.roundPoints;
         const diff = f1Perf - f2Perf;
 
-        if (diff >= 18) { f1Score = 10; f2Score = 8; }
+        if (diff >= 30) { f1Score = 10; f2Score = 7; }
+        else if (diff >= 18) { f1Score = 10; f2Score = 8; }
         else if (diff > 0) { f1Score = 10; f2Score = 9; }
+        else if (diff <= -30) { f1Score = 7; f2Score = 10; }
         else if (diff <= -18) { f1Score = 8; f2Score = 10; }
         else if (diff < 0) { f1Score = 9; f2Score = 10; }
+        else {
+            // Round empatado tecnicamente: desempate por pontos táticos, depois total de pontos, depois sorteio
+            if (f1.roundPoints > f2.roundPoints) { f1Score = 10; f2Score = 9; }
+            else if (f2.roundPoints > f1.roundPoints) { f1Score = 9; f2Score = 10; }
+            else if (f1.totalPoints > f2.totalPoints) { f1Score = 10; f2Score = 9; }
+            else if (f2.totalPoints > f1.totalPoints) { f1Score = 9; f2Score = 10; }
+            else {
+                if (Math.random() < 0.5) { f1Score = 10; f2Score = 9; }
+                else { f1Score = 9; f2Score = 10; }
+            }
+        }
 
         fight.roundScores.push({ round: fight.currentRound, f1: f1Score, f2: f2Score });
 
         const statusList = fight.fighters.map(f => {
             const cutStatus = f.cuts === 1 ? '🩹 Corte Leve' : f.cuts === 2 ? '🩸 Corte Profundo' : '✅ Íntegro';
             const counterStatus = f.counterWindow ? '⚡ *Contragolpe Pronto*' : '➖ *Neutro*';
-            return `**Atleta:** ${f.mention}\n• **Gás:** ${getStaminaBar(f.stamina)}\n• **Dano:** ${getDamageBar(f.damage)}\n• **Estado:** ${cutStatus} | ${counterStatus}\n`;
+            return `**Atleta:** ${f.mention}\n• **Gás:** ${getStaminaBar(f.stamina)}\n• **Dano:** ${getDamageBar(f.damage, 20)}\n• **Estado:** ${cutStatus} | ${counterStatus}\n`;
         }).join('\n');
+
+        const reportText = fight.roundReport.length > 0
+            ? fight.roundReport.join('\n')
+            : 'Nenhuma troca de golpes registrada neste round.';
 
         const embed = new EmbedBuilder()
             .setTitle(`🔔 FIM DO ROUND ${fight.currentRound}!`)
             .setColor(0x3498db)
             .setDescription(`Tempo regulamentar encerrado!\nSúmula do Round: **${f1.mention} ${f1Score} x ${f2Score} ${f2.mention}**\nUtilize os botões abaixo para realizar suas ações de intervalo.`)
-            .addFields({ name: '📊 Condição Física dos Atletas', value: statusList })
+            .addFields(
+                { name: '📊 Relatório do Round (Atk x Def)', value: reportText },
+                { name: '📊 Condição Física dos Atletas', value: statusList }
+            )
             .setTimestamp();
 
         // Reseta contadores de round após pontuação
@@ -372,7 +330,10 @@ class FightManager {
             f.roundDamage = 0;
             f.roundPoints = 0;
             f.recuperarUsedThisRound = false;
+            f.defenseLevel = null;
         });
+
+        fight.roundReport = [];
 
         const buttonsRow = createBetweenRoundsButtons();
 
@@ -406,11 +367,18 @@ class FightManager {
 
                 const effectiveDiff = diff + divergence;
 
-                if (effectiveDiff >= 2) { j1 = 10; j2 = 8; }
+                // Súmula limitada a 10-9, 10-8 ou 10-7; nenhum round empata
+                if (effectiveDiff >= 3) { j1 = 10; j2 = 7; }
+                else if (effectiveDiff >= 2) { j1 = 10; j2 = 8; }
                 else if (effectiveDiff > 0) { j1 = 10; j2 = 9; }
+                else if (effectiveDiff <= -3) { j1 = 7; j2 = 10; }
                 else if (effectiveDiff <= -2) { j1 = 8; j2 = 10; }
                 else if (effectiveDiff < 0) { j1 = 9; j2 = 10; }
-                else { j1 = 10; j2 = 10; }
+                else {
+                    // Nunca empata: quem venceu oficialmente o round leva 10-9
+                    if (diff > 0) { j1 = 10; j2 = 9; }
+                    else { j1 = 9; j2 = 10; }
+                }
 
                 judge.f1Scores.push(j1);
                 judge.f2Scores.push(j2);
@@ -432,8 +400,18 @@ class FightManager {
                 f2Votes++;
                 verdict = `${f2.mention}`;
             } else {
-                drawVotes++;
-                verdict = "Empate";
+                // Cartão empatado: desempate por rounds vencidos, depois pontos totais, depois sorteio
+                const f1RoundsWon = fight.roundScores.filter(r => r.f1 > r.f2).length;
+                const f2RoundsWon = fight.roundScores.filter(r => r.f2 > r.f1).length;
+
+                if (f1RoundsWon > f2RoundsWon) { f1Votes++; verdict = `${f1.mention}`; }
+                else if (f2RoundsWon > f1RoundsWon) { f2Votes++; verdict = `${f2.mention}`; }
+                else if (f1.totalPoints > f2.totalPoints) { f1Votes++; verdict = `${f1.mention}`; }
+                else if (f2.totalPoints > f1.totalPoints) { f2Votes++; verdict = `${f2.mention}`; }
+                else {
+                    if (Math.random() < 0.5) { f1Votes++; verdict = `${f1.mention}`; }
+                    else { f2Votes++; verdict = `${f2.mention}`; }
+                }
             }
             return `👨‍⚖️ **${j.name}:** \`${j.f1Total} - ${j.f2Total}\` *(Vencedor: ${verdict})*`;
         }).join('\n');
@@ -469,7 +447,10 @@ class FightManager {
             return `• **Round ${r.round}:** (${scoresText})`;
         }).join('\n');
 
-        return { f1, f2, decisionType, winnerMention, cardsSummary, roundByRoundText };
+        const f1Total = judgeCards.reduce((sum, j) => sum + j.f1Total, 0);
+        const f2Total = judgeCards.reduce((sum, j) => sum + j.f2Total, 0);
+
+        return { f1, f2, decisionType, winnerMention, cardsSummary, roundByRoundText, scoreSummary: cardsSummary, f1Total, f2Total };
     }
 
     static stopFight(channel) {

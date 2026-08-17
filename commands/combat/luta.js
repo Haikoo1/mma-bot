@@ -135,30 +135,6 @@ module.exports = {
             return;
         }
 
-        // 💥 NOCAUTE MANUAL
-        if (subCommand === 'nocaute') {
-            const fight = FightManager.getFight(message.channel.id);
-            if (!fight) return message.reply('❌ Nenhuma luta ativa neste canal.');
-
-            const mentionedUser = message.mentions.users.first();
-            if (!mentionedUser) return message.reply('❌ Mencione o lutador que foi nocauteado.');
-
-            const loser = fight.fighters.find(f => f.id === mentionedUser.id);
-            const winner = fight.fighters.find(f => f.id !== mentionedUser.id);
-
-            if (!loser) return message.reply('❌ O usuário mencionado não faz parte da luta atual neste canal.');
-
-            const finishData = {
-                type: 'KO',
-                loser: loser.mention,
-                winner: winner ? winner.mention : 'Adversário',
-                reason: 'Nocaute declarado manualmente via comando.'
-            };
-
-            FightManager.executeFinish(message.channel, fight, finishData);
-            return;
-        }
-
         // 🛑 ENCERRAR LUTA
         if (subCommand === 'encerrar') {
             const stopped = FightManager.stopFight(message.channel);
@@ -166,6 +142,6 @@ module.exports = {
             return message.reply('❌ Nenhuma luta ativa para encerrar.');
         }
 
-        return message.reply('❌ Subcomandos válidos: `iniciar`, `teste`, `decisao`, `nocaute`, `encerrar`.');
+        return message.reply('❌ Subcomandos válidos: `iniciar`, `teste`, `decisao`, `encerrar`.');
     }
 };

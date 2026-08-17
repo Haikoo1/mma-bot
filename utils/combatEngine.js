@@ -48,6 +48,13 @@ function processRoll(effectiveLevel, userId) {
     }
 }
 
+// Mapeia a tiragem defensiva para um nível de defesa usado no cálculo Atk x Def
+const TIER_DEFENSE_LEVEL = { GEM: 5, STAR2: 3, STAR: 2, MISS: 1 };
+
+function getDefenseLevelFromTier(tier) {
+    return TIER_DEFENSE_LEVEL[tier] || 2;
+}
+
 function buildAttackEmbed(data) {
     const { attacker, moveName, level, effectiveLevel, outcomeData, alertMessage, isCounter } = data;
 
@@ -83,4 +90,4 @@ function buildAttackEmbed(data) {
     return embed;
 }
 
-module.exports = { validateUserRole, processRoll, buildAttackEmbed };
+module.exports = { validateUserRole, processRoll, buildAttackEmbed, getDefenseLevelFromTier };

@@ -83,12 +83,6 @@ module.exports = {
 
         await message.reply({ embeds: [embed] });
 
-        if (hitResult) {
-            await FightManager.sendHitResult(message.channel, hitResult);
 
-            if (hitResult.pendingFinish) {
-                await FightManager.executeFinish(message.channel, hitResult.fight, hitResult.pendingFinish);
-            }
-        }
     }
 };

@@ -1,4 +1,4 @@
-const { validateUserRole, processRoll, buildAttackEmbed } = require('../../../../utils/combatEngine');
+const { validateUserRole, processRoll, buildAttackEmbed, getDefenseLevelFromTier } = require('../../../../utils/combatEngine');
 const { FightManager } = require('../../../../utils/fightManager');
 
 module.exports = {
@@ -75,6 +75,16 @@ module.exports = {
             if (attObj && tier === 'GEM') {
                 attObj.counterWindow = true;
                 alertMessage = `⚡ **CONTRAGOLPE ATIVO:** ${attObj.mention} encaixou uma esquiva perfeita e terá **+1 Nível Efetivo** no próximo ataque!`;
+            }
+        }
+
+        // 🛡️ Registra o nível de defesa para o cálculo Atk x Def do próximo ataque do oponente
+        if (fight) {
+            const attObj = fight.fighters.find(f => f.id === attacker.id);
+            if (attObj) {
+                attObj.defenseLevel = getDefenseLevelFromTier(tier);
+                const defAlert = `🛡️ **Defesa Nível ${attObj.defenseLevel} registrada!** O próximo ataque do oponente será calculado contra ela.`;
+                alertMessage = alertMessage ? `${alertMessage}\n${defAlert}` : defAlert;
             }
         }
 

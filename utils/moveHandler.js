@@ -43,13 +43,7 @@ async function executeMove(message, level, moveConfig) {
 
     await message.channel.send({ embeds: [actionEmbed] });
 
-    // 5. Envia o relatório separado de Ataque x Defesa e status
-    await FightManager.sendHitResult(message.channel, result);
-
-    // 6. Finaliza a luta se ocorreu KO / TKO / Submissão
-    if (result.pendingFinish) {
-        await FightManager.executeFinish(message.channel, result.fight, result.pendingFinish);
-    }
+    // 5. O relatório Atk x Def é exibido uma única vez por round, no fim do round
 }
 
 module.exports = { executeMove };
